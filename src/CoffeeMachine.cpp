@@ -12,10 +12,15 @@ int main() {
 
   // 咖啡机内菜单
   std::list<coffee_menu> machine_menus;
-  if(!has_ingredients()){
+  if(!read_ingredients()){
     create_new_ingredients();
   }else{
     std::cout<<"已初始化成功。"<<std::endl;
+    press_any_button();
   }
+  std::fstream ingredientsFile;
+  ingredientsFile.open("ingredients.txt", std::ios::out | std::ios::trunc);
+  print_machine_ingredients(ingredientsFile);
+  ingredientsFile.close();
   return 0;
 }
