@@ -1,34 +1,284 @@
 /*
- * Çë°Ñ¾­³£ĞèÒªµ÷ÓÃµÄº¯Êı£¨³ıstructs.hÀïÃæ·â×°ºÃµÄÔöÉ¾¸Ä²éÖ®Íâ£©Ğ´ÔÚÕâ¸öÍ·ÎÄ¼şÀï¡£
+ * è¯·æŠŠç»å¸¸éœ€è¦è°ƒç”¨çš„å‡½æ•°ï¼ˆé™¤structs.hé‡Œé¢å°è£…å¥½çš„å¢åˆ æ”¹æŸ¥ä¹‹å¤–ï¼‰å†™åœ¨è¿™ä¸ªå¤´æ–‡ä»¶é‡Œã€‚
  */
-
 #ifndef INCLUDE_FUNCTIONS_H_
 #define INCLUDE_FUNCTIONS_H_
 /*
- * Í·ÎÄ¼ş±£»¤, IDE×Ô´ø¡£
- * #ifndef±íÊ¾Èç¹ûÎ´¶¨ÒåÍ·ÎÄ¼şÔò½øĞĞÒ»´Î¶¨Òå¡£
- * Õâ¸öĞ´·¨À´×ÔÓÚC£¬¶øÇÒC++Ò²ĞèÒªÊ¹ÓÃÕâÖÖ·½·¨¡£
+ * å¤´æ–‡ä»¶ä¿æŠ¤, IDEè‡ªå¸¦ã€‚
+ * #ifndefè¡¨ç¤ºå¦‚æœæœªå®šä¹‰å¤´æ–‡ä»¶åˆ™è¿›è¡Œä¸€æ¬¡å®šä¹‰ã€‚
+ * è¿™ä¸ªå†™æ³•æ¥è‡ªäºCï¼Œè€Œä¸”C++ä¹Ÿéœ€è¦ä½¿ç”¨è¿™ç§æ–¹æ³•ã€‚
  */
-#include <iostream>
-using namespace std;
-int main()
-{
-    cout << " ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª";
-    cout << " ¿§·È»úÄ£ÄâÏµÍ³ µ±Ç°°æ±¾ µ±Ç°Ê±¼ä";
-    cout << " ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª";
-    cout << " ¿§·È¶¹Ê£ÓàÁ¿£º£¨µ±Ç°Ê£ÓàµÄ¿§·È¶¹ÖÊÁ¿£©";
-    cout << "   Ë®Ê£ÓàÁ¿£º£¨µ±Ç°Ê£ÓàµÄ¿§·È¶¹ÖÊÁ¿£©";
-    cout << " ±¾´ÎÔËĞĞÒÑÖÆ×÷µÄ¿§·ÈÊıÁ¿£ºX ±­ÃÀÊ½µÎÂË / Y ±­ÒâÊ½Å¨Ëõ";
-    cout << " ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª";
-    cout << "[0] Ô­ÁÏ¹ÜÀí[1] ²Ëµ¥¹ÜÀí[2] ĞÂÔö¶©µ¥[3] ´òÓ¡Ô¤Éè²Ëµ¥[-1] ½áÊø³ÌĞò";
-    cout << " ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª";
-    cout << "ÇëÊäÈëÖ¸Áî£º";
-   
-    return 0;
+#include <iostream> // C++ é£æ ¼è¾“å…¥è¾“å‡ºï¼Œä½¿ç”¨è¾“å…¥è¾“å‡ºæµè¿›è¡Œæ“ä½œã€‚
+#include <utility> // C++ é€šç”¨å·¥å…·å¤´æ–‡ä»¶ï¼Œpairå®šä¹‰äºæ­¤
+#include <list> //C++ STLå®ç° åŒå‘é“¾è¡¨ï¼ˆæˆ‘ä»¬ç”šè‡³ä¸éœ€è¦è‡ªå·±å†™é“¾è¡¨äº†ï¼ŒYESï¼‰
+#include <fstream> //C++ æ–‡ä»¶è¾“å…¥è¾“å‡ºæµ
+#include <sstream> //C++ å­—ç¬¦ä¸²æµ
+#include <cstdlib> //Cè¯­è¨€çš„stdlibï¼Œç”¨C++è°ƒç”¨æ—¶å€™å»ºè®®ä½¿ç”¨<c***>ï¼ˆ***ä»£è¡¨åŸæ¥çš„å¤´æ–‡ä»¶åç§°ï¼‰
+#include "structs.h" // è‡ªå·±çš„ç»“æ„ä½“å¤´æ–‡ä»¶
+
+//è¾“å‡ºä¸€ä¸ª80å­—ç¬¦çš„åˆ†éš”çº¿
+//80å­—ç¬¦çš„æ ‡å‡†ä¸è¿‡åˆ†å§ï¼Ÿè¿™å¯æ˜¯æœ€é€‚åˆæ‰“å°çš„é•¿åº¦æ ‡å‡†ï¼
+void print_line() {
+  for (int i = 0; i < 80; i++)
+    std::cout << '-';
+  std::cout << std::endl;
+}
+//è¿™æ˜¯ç»™æ–‡ä»¶çš„ç‰ˆæœ¬
+void print_line(std::fstream &outFile) {
+  for (int i = 0; i < 80; i++)
+    outFile << '-';
+  outFile << std::endl;
 }
 
+/**
+ * æ¥è‡ªç½‘ä¸Šçš„æ¸…å±ä»£ç ï¼Œè¿™é‡Œæœ‰ä¸€ä¸ªåˆ†ç³»ç»Ÿçš„å†™æ³•ã€‚
+ * å¦‚æœæ˜¯Windowså°±ç›´æ¥clsï¼Œå¦åˆ™clearã€‚
+ * æŸç§æ„ä¹‰æ¥è¯´å¥½åƒæœ¬æ¥å°±æ˜¯å¾ˆä¸å®‰å…¨çš„å†™æ³•ï¼Ÿ
+ */
+void clear_screen() {
+#ifdef _WIN32
+  std::system("cls");
+#else
+    // Assume POSIX
+    std::system("clear");
+  #endif
+}
 
+void press_any_button() {
+  print_line();
+  std::cout << "æŒ‰ä»»æ„é”®ç»§ç»­ã€‚" << std::endl;
+  while (std::cin.get() != '\n')		//è¿™é‡Œæ¸…ç©ºä¹‹å‰cinç¼“å†²åŒºçš„æ•°æ®
+    continue;
+}
 
+//è¾“å…¥ç”¨å‡½æ•°
+void input_value(int &value) {
+  while (!(std::cin >> value)) {
+    std::cout << "è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ã€‚" << std::endl;
+    std::cin.clear();
+    while (std::cin.get() != '\n')		//è¿™é‡Œæ¸…ç©ºä¹‹å‰cinç¼“å†²åŒºçš„æ•°æ®
+      continue;
+  }
+}
+//è¾“å…¥boolç”¨å‡½æ•°
+bool input_bool() {
+  bool value;
+  std::cout << "è¯·è¾“å…¥trueæˆ–è€…falseã€‚" << std::endl;
+  while (!(std::cin >> std::boolalpha >> value)) {
+    std::cout << "è¾“å…¥é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥ã€‚" << std::endl;
+    std::cout << "è¯·è¾“å…¥trueæˆ–è€…falseã€‚" << std::endl;
+    std::cin.clear();
+    while (std::cin.get() != '\n')		//è¿™é‡Œæ¸…ç©ºä¹‹å‰cinç¼“å†²åŒºçš„æ•°æ®
+      continue;
+  }
+  return value;
+}
 
+void setting_additives(coffee_additives &new_additives) {
+  std::string name;
+  int amount;
+  bool flag = false;
+  print_line();
+  do {
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„å¥¶åˆ¶å“åç§°ã€‚" << std::endl;
+    std::cin >> name;
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„åº“å­˜é‡ã€‚" << std::endl;
+    input_value(amount);
+    new_additives.add_milk(name, amount);
+    std::cout << "æ‚¨è¿˜éœ€è¦ç»§ç»­æ·»åŠ å¥¶åˆ¶å“å—ï¼Ÿ" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+  print_line();
+  do {
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„ç³–æµ†åç§°ã€‚" << std::endl;
+    std::cin >> name;
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„åº“å­˜é‡ã€‚" << std::endl;
+    input_value(amount);
+    new_additives.add_syrup(name, amount);
+    std::cout << "æ‚¨è¿˜éœ€è¦ç»§ç»­æ·»åŠ ç³–æµ†å—ï¼Ÿ" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+  print_line();
+  do {
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„ç”œå‘³å‰‚åç§°ã€‚" << std::endl;
+    std::cin >> name;
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„åº“å­˜é‡ã€‚" << std::endl;
+    input_value(amount);
+    new_additives.add_sweeter(name, amount);
+    std::cout << "æ‚¨è¿˜éœ€è¦ç»§ç»­æ·»åŠ ç”œå‘³å‰‚å—ï¼Ÿ" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+  print_line();
+  do {
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„é…’ç±»åç§°ã€‚" << std::endl;
+    std::cin >> name;
+    std::cout << "è¯·è¾“å…¥å½“å‰åº“å­˜é‡ã€‚" << std::endl;
+    input_value(amount);
+    new_additives.add_alcohol(name, amount);
+    std::cout << "æ‚¨è¿˜éœ€è¦ç»§ç»­æ·»åŠ é…’å—ï¼Ÿ" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+  print_line();
+  do {
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„å…¶ä»–æ·»åŠ å‰‚ã€‚" << std::endl;
+    std::cin >> name;
+    std::cout << "è¯·è¾“å…¥æ‚¨æƒ³è¦æ·»åŠ çš„åº“å­˜é‡ã€‚" << std::endl;
+    input_value(amount);
+    new_additives.add_alcohol(name, amount);
+    std::cout << "æ‚¨è¿˜éœ€è¦ç»§ç»­æ·»åŠ å…¶ä»–æ·»åŠ å‰‚å—ï¼Ÿ" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+  print_line();
+  std::cout << "æ·»åŠ å‰‚è®¾ç½®å®Œæˆ" << std::endl;
+}
+
+coffee_additives create_new_coffee_additives() {
+  coffee_additives new_additives;
+  setting_additives(new_additives);
+  return new_additives;
+}
+
+//åˆ›å»ºæ–°çš„åŸæ–™
+void create_new_ingredients() {
+  std::fstream ingredientsFile;
+  ingredientsFile.open("ingredients.dat", std::ios::binary | std::ios::out | std::ios::trunc);
+  bool flag = false;
+  do {
+    clear_screen();
+    print_line();
+    std::cout << "è¿›è¡Œå’–å•¡æœºåŸæ–™åˆå§‹åŒ–å·¥ä½œã€‚" << std::endl;
+    std::cout << "è¯·æ ¹æ®æ“ä½œæç¤ºè¿›è¡Œåˆå§‹åŒ–ã€‚" << std::endl;
+    press_any_button();
+    print_line();
+    std::cout << "è¯·æ³¨æ„ï¼Œæ‰€æœ‰çš„æ•°æ®å‡æŒ‰ç…§è´¨é‡è®¡ç®—ã€‚" << std::endl;
+    std::cout << "æ•°å€¼å¯¹åº”ä¸ºåŸæ–™çš„å…‹æ•°ï¼Œå³å½“å‰æœ‰å¤šå°‘å…‹åŸæ–™ã€‚" << std::endl;
+    print_line();
+    std::cout << "è¯·è¾“å…¥å’–å•¡æœºå†…å½“å‰çš„æ°´é‡ã€‚" << std::endl;
+    input_value(machine_ingredients.water);
+    std::cout << "è¯·è¾“å…¥å’–å•¡æœºå†…å½“å‰çš„å’–å•¡è±†æ•°é‡ã€‚" << std::endl;
+    input_value(machine_ingredients.coffeeBean);
+    print_line();
+    std::cout << "å¼€å§‹è¾“å…¥å’–å•¡æœºå†…å…¶ä½™çš„æ·»åŠ å‰‚å†…å®¹ç‰©ã€‚" << std::endl;
+    press_any_button();
+    machine_ingredients.additives = create_new_coffee_additives();
+    std::cout << "æ‚¨éœ€è¦é‡æ–°è®¾ç½®å’–å•¡æœºå—ï¼Ÿ" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+  std::string now;
+  ingredientsFile<<machine_ingredients.water<<machine_ingredients.coffeeBean;
+  for (auto it = machine_ingredients.additives.milk.begin();
+      it != machine_ingredients.additives.milk.end(); it++) {
+    now = "milk "+it->first+" "+std::to_string(it->second);
+    ingredientsFile << now.c_str();
+  }
+  for (auto it = machine_ingredients.additives.syrup.begin();
+      it != machine_ingredients.additives.syrup.end(); it++) {
+    now = "syrup "+it->first+" "+std::to_string(it->second);
+    ingredientsFile << now.c_str();
+  }
+  for (auto it = machine_ingredients.additives.sweeter.begin();
+      it != machine_ingredients.additives.sweeter.end(); it++) {
+    now = "sweeter "+it->first+" "+std::to_string(it->second);
+    ingredientsFile << now.c_str();
+  }
+  for (auto it = machine_ingredients.additives.alcohol.begin();
+      it != machine_ingredients.additives.alcohol.end(); it++) {
+    now = "alcohol "+it->first+" "+std::to_string(it->second);
+    ingredientsFile << now.c_str();
+  }
+  for (auto it = machine_ingredients.additives.others.begin();
+      it != machine_ingredients.additives.others.end(); it++) {
+    now = "others "+it->first+" "+std::to_string(it->second);
+    ingredientsFile << now.c_str();
+  }
+  ingredientsFile.close();
+  std::cout << "å’–å•¡æœºåŸæ–™åˆå§‹åŒ–å®Œæˆã€‚" << std::endl;
+}
+
+//æ˜¯å¦æœ‰åŸæ–™ï¼Œå¦‚æœæ²¡æœ‰åŸæ–™åˆ™ç†åº”æ‰§è¡Œæ–°å»ºåŸæ–™æµç¨‹ã€‚
+bool read_ingredients() {
+  std::fstream ingredientsFile;
+  ingredientsFile.open("ingredients.dat", std::ios::binary | std::ios::in);
+  if (!ingredientsFile.is_open())
+    return false;
+
+  ingredientsFile >> machine_ingredients.water >> machine_ingredients.coffeeBean;
+  std::string additives_string;
+  std::list<std::string> additives_strings;
+  while (!ingredientsFile.eof()) {
+    ingredientsFile >> additives_string;
+    additives_strings.push_back(additives_string);
+  }
+
+  for (auto listit = additives_strings.begin(); listit != additives_strings.end();
+      listit++) {
+    std::istringstream stream(additives_string);
+    std::string type, name;
+    int amount;
+    stream >> type;
+    if (type == "milk") {
+      stream >> name >> amount;
+      machine_ingredients.additives.add_milk(name, amount);
+    }
+    else if (type == "syrup") {
+      stream >> name >> amount;
+      machine_ingredients.additives.add_syrup(name, amount);
+    }
+    else if (type == "sweeter") {
+      stream >> name >> amount;
+      machine_ingredients.additives.add_sweeter(name, amount);
+    }
+    else if (type == "alcohol") {
+      stream >> name >> amount;
+      machine_ingredients.additives.add_alcohol(name, amount);
+    }
+    else if (type == "others") {
+      stream >> name >> amount;
+      machine_ingredients.additives.add_other_ingredient(name, amount);
+    }
+  }
+  return true;
+}
+
+void print_machine_ingredients(std::fstream &ingredientsFile) {
+  print_line(ingredientsFile);
+  ingredientsFile << "æ°´é‡ï¼š" << machine_ingredients.water << std::endl;
+  ingredientsFile << "å’–å•¡è±†ï¼š" << machine_ingredients.coffeeBean << std::endl;
+  std::map<std::string, int>::iterator it;		//å®šä¹‰mapè¿­ä»£å™¨ï¼Œç”¨äºéå†mapã€‚
+  print_line(ingredientsFile);
+  ingredientsFile << "å’–å•¡æ·»åŠ å‰‚ï¼š" << std::endl;
+  ingredientsFile << "\tå¥¶åˆ¶å“ï¼š" << std::endl;
+  for (it = machine_ingredients.additives.milk.begin();
+      it != machine_ingredients.additives.milk.end(); it++) {
+    ingredientsFile << "\t\tåç§°ï¼š" << it->first << "ï¼Œå«é‡" << it->second;
+  }
+  ingredientsFile << "\tç³–æµ†ï¼š" << std::endl;
+  for (it = machine_ingredients.additives.syrup.begin();
+      it != machine_ingredients.additives.syrup.end(); it++) {
+    ingredientsFile << "\t\tåç§°ï¼š" << it->first << "ï¼Œå«é‡" << it->second;
+  }
+  ingredientsFile << "\tç”œå‘³å‰‚ï¼š" << std::endl;
+  for (it = machine_ingredients.additives.sweeter.begin();
+      it != machine_ingredients.additives.sweeter.end(); it++) {
+    ingredientsFile << "\t\tåç§°ï¼š" << it->first << "ï¼Œå«é‡" << it->second;
+  }
+  ingredientsFile << "\té…’ç±»ï¼š" << std::endl;
+  for (it = machine_ingredients.additives.alcohol.begin();
+      it != machine_ingredients.additives.alcohol.end(); it++) {
+    ingredientsFile << "\t\tåç§°ï¼š" << it->first << "ï¼Œå«é‡" << it->second;
+  }
+  ingredientsFile << "\tå…¶ä»–æ·»åŠ å‰‚ï¼š" << std::endl;
+  for (it = machine_ingredients.additives.others.begin();
+      it != machine_ingredients.additives.others.end(); it++) {
+    ingredientsFile << "\t\tåç§°ï¼š" << it->first << "ï¼Œå«é‡" << it->second;
+  }
+  print_line(ingredientsFile);
+}
 
 #endif /* INCLUDE_FUNCTIONS_H_ */

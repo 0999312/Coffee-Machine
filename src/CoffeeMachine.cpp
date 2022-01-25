@@ -1,17 +1,26 @@
-#include <iostream> // C++ ·ç¸ñÊäÈëÊä³ö£¬Ê¹ÓÃÊäÈëÊä³öÁ÷½øĞĞ²Ù×÷¡£
-#include <utility> // C++ Í¨ÓÃ¹¤¾ßÍ·ÎÄ¼ş£¬pair¶¨ÒåÓÚ´Ë
-#include <list> //C++ STLÊµÏÖ Ë«ÏòÁ´±í£¨ÎÒÃÇÉõÖÁ²»ĞèÒª×Ô¼ºĞ´Á´±íÁË£¬YES£©
-#include "include/structs.h" // ×Ô¼ºµÄ½á¹¹ÌåÍ·ÎÄ¼ş
+#include <iostream> // C++ é£æ ¼è¾“å…¥è¾“å‡ºï¼Œä½¿ç”¨è¾“å…¥è¾“å‡ºæµè¿›è¡Œæ“ä½œã€‚
+#include <utility> // C++ é€šç”¨å·¥å…·å¤´æ–‡ä»¶ï¼Œpairå®šä¹‰äºæ­¤
+#include <list> //C++ STLå®ç° åŒå‘é“¾è¡¨ï¼ˆæˆ‘ä»¬ç”šè‡³ä¸éœ€è¦è‡ªå·±å†™é“¾è¡¨äº†ï¼ŒYESï¼‰
+#include "include/structs.h" // è‡ªå·±çš„ç»“æ„ä½“å¤´æ–‡ä»¶
+#include "include/functions.h" // è‡ªå·±çš„å‡½æ•°å¤´æ–‡ä»¶
 
 int main() {
-  // ¿§·È»úÄÚ²Ëµ¥
+  //ä½¿ç”¨UTF-8ç¼–ç ï¼Œå¥½åƒæ˜¯Windowsçš„è€æ¯›ç—…
+  #ifdef _WIN32
+    std::system("chcp 65001");
+  #endif
+
+  // å’–å•¡æœºå†…èœå•
   std::list<coffee_menu> machine_menus;
-  // ²âÊÔ³ÌĞò£¬Êä³öÁ½¸öÅ£ÄÌµÄÁ¿¡£
-  // ¿§·È»úÄÚÔ­ÁÏ"include/structs.h"ÀïÃæÁË¡£
-
-  machine_ingredients.additives.add_milk("milk", 1000);
-  std::cout << "milk:" << machine_ingredients.additives.get_milk("milk") << std::endl;
-  std::cout << "soymilk:" << machine_ingredients.additives.get_milk("soymilk") << std::endl;
-
+  if(!read_ingredients()){
+    create_new_ingredients();
+  }else{
+    std::cout<<"å·²åˆå§‹åŒ–æˆåŠŸã€‚"<<std::endl;
+    press_any_button();
+  }
+  std::fstream ingredientsFile;
+  ingredientsFile.open("ingredients.txt", std::ios::out | std::ios::trunc);
+  print_machine_ingredients(ingredientsFile);
+  ingredientsFile.close();
   return 0;
 }
