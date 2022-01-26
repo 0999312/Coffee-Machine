@@ -77,6 +77,16 @@ struct coffee_additives{
       return useResult;
     }
 
+    bool delete_milk(std::string name) {
+      bool useResult = false;
+      auto result = this->milk.find(name);
+      if (result != this->milk.end()) {
+	this->milk.erase(name);
+	useResult = true;
+      }
+      return useResult;
+    }
+
     void set_syrup(std::string name, int count) {
       auto result = this->syrup.find(name);
       if (result != this->syrup.end())
@@ -109,6 +119,16 @@ struct coffee_additives{
 	  result->second -= count;
 	  useResult = true;
 	}
+      }
+      return useResult;
+    }
+
+    bool delete_syrup(std::string name) {
+      bool useResult = false;
+      auto result = this->syrup.find(name);
+      if (result != this->syrup.end()) {
+	this->syrup.erase(name);
+	useResult = true;
       }
       return useResult;
     }
@@ -149,6 +169,16 @@ struct coffee_additives{
       return useResult;
     }
 
+    bool delete_sweeter(std::string name) {
+      bool useResult = false;
+      auto result = this->sweeter.find(name);
+      if (result != this->sweeter.end()) {
+	this->sweeter.erase(name);
+	useResult = true;
+      }
+      return useResult;
+    }
+
     void set_alcohol(std::string name, int count) {
       auto result = this->alcohol.find(name);
       if (result != this->alcohol.end())
@@ -181,6 +211,16 @@ struct coffee_additives{
 	  result->second -= count;
 	  useResult = true;
 	}
+      }
+      return useResult;
+    }
+
+    bool delete_alcohol(std::string name) {
+      bool useResult = false;
+      auto result = this->alcohol.find(name);
+      if (result != this->alcohol.end()) {
+	this->alcohol.erase(name);
+	useResult = true;
       }
       return useResult;
     }
@@ -219,6 +259,44 @@ struct coffee_additives{
 	}
       }
       return useResult;
+    }
+
+    bool delete_other_ingredient(std::string name) {
+      bool useResult = false;
+      auto result = this->others.find(name);
+      if (result != this->others.end()) {
+	this->others.erase(name);
+	useResult = true;
+      }
+      return useResult;
+    }
+
+    bool use_ingredient(std::string name, int count) {
+      if(use_milk(name, count))
+	return true;
+      if(use_syrup(name, count))
+	return true;
+      if(use_sweeter(name, count))
+	return true;
+      if(use_alcohol(name, count))
+	return true;
+      if(use_other_ingredient(name, count))
+	return true;
+      return false;
+    }
+
+    bool delete_ingredient(std::string name) {
+      if(delete_milk(name))
+	return true;
+      if(delete_syrup(name))
+	return true;
+      if(delete_sweeter(name))
+	return true;
+      if(delete_alcohol(name))
+	return true;
+      if(delete_other_ingredient(name))
+	return true;
+      return false;
     }
 };
 
