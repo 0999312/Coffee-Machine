@@ -14,6 +14,8 @@
 #include <fstream> //C++ 文件输入输出流
 #include <sstream> //C++ 字符串流
 #include <cstdlib> //C语言的stdlib，用C++调用时候建议使用<c***>（***代表原来的头文件名称）
+#include <iterator>
+#include <algorithm> // C++算法库
 #include "structs.h" // 自己的结构体头文件
 
 //输出一个80字符的分隔线
@@ -47,6 +49,7 @@ void clear_screen() {
 void press_any_button() {
   print_line();
   std::cout << "按任意键继续。" << std::endl;
+  std::cin.clear();
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
 }
@@ -128,7 +131,7 @@ void setting_additives(coffee_additives &new_additives) {
     std::cin >> name;
     std::cout << "请输入您想要添加的库存量。" << std::endl;
     input_value(amount);
-    new_additives.add_alcohol(name, amount);
+    new_additives.add_other_ingredient(name, amount);
     std::cout << "您还需要继续添加其他添加剂吗？" << std::endl;
     flag = input_bool();
   }
@@ -143,10 +146,23 @@ coffee_additives create_new_coffee_additives() {
   return new_additives;
 }
 
+void write_map(std::map<std::string, int> &map,
+	      std::ofstream &ingredientsFile) {
+  std::map<std::string, int>::iterator iter = map.begin();
+  size_t size= (iter->first).size();
+  while (iter != map.end()) {
+    ingredientsFile.write((char*) (&size), sizeof(size));
+    ingredientsFile.write((char*) (iter->first.c_str()), size);
+    ingredientsFile.write((char*) (&iter->second), sizeof(int));
+    iter++;
+  }
+}
+
 //创建新的原料
 void create_new_ingredients() {
-  std::fstream ingredientsFile;
-  ingredientsFile.open("ingredients.dat", std::ios::binary | std::ios::out | std::ios::trunc);
+  std::ofstream ingredientsFile;
+  ingredientsFile.open("ingredients.dat",
+		       std::ios::binary | std::ios::out | std::ios::trunc);
   bool flag = false;
   do {
     clear_screen();
@@ -170,79 +186,98 @@ void create_new_ingredients() {
     flag = input_bool();
   }
   while (flag);
-  std::string now;
-  ingredientsFile<<machine_ingredients.water<<machine_ingredients.coffeeBean;
-  for (auto it = machine_ingredients.additives.milk.begin();
-      it != machine_ingredients.additives.milk.end(); it++) {
-    now = "milk "+it->first+" "+std::to_string(it->second);
-    ingredientsFile << now.c_str();
-  }
-  for (auto it = machine_ingredients.additives.syrup.begin();
-      it != machine_ingredients.additives.syrup.end(); it++) {
-    now = "syrup "+it->first+" "+std::to_string(it->second);
-    ingredientsFile << now.c_str();
-  }
-  for (auto it = machine_ingredients.additives.sweeter.begin();
-      it != machine_ingredients.additives.sweeter.end(); it++) {
-    now = "sweeter "+it->first+" "+std::to_string(it->second);
-    ingredientsFile << now.c_str();
-  }
-  for (auto it = machine_ingredients.additives.alcohol.begin();
-      it != machine_ingredients.additives.alcohol.end(); it++) {
-    now = "alcohol "+it->first+" "+std::to_string(it->second);
-    ingredientsFile << now.c_str();
-  }
-  for (auto it = machine_ingredients.additives.others.begin();
-      it != machine_ingredients.additives.others.end(); it++) {
-    now = "others "+it->first+" "+std::to_string(it->second);
-    ingredientsFile << now.c_str();
-  }
+  ingredientsFile.write((char*)&machine_ingredients.water,sizeof(int));
+  ingredientsFile.write((char*)&machine_ingredients.coffeeBean,sizeof(int));
+  ingredientsFile.close();
+  ingredientsFile.open("additives_milk.dat",
+		       std::ios::binary | std::ios::out | std::ios::trunc);
+  write_map(machine_ingredients.additives.milk, ingredientsFile);
+  ingredientsFile.close();
+  ingredientsFile.open("additives_syrup.dat",
+		       std::ios::binary | std::ios::out | std::ios::trunc);
+  write_map(machine_ingredients.additives.syrup, ingredientsFile);
+  ingredientsFile.close();
+  ingredientsFile.open("additives_sweeter.dat",
+		       std::ios::binary | std::ios::out | std::ios::trunc);
+  write_map(machine_ingredients.additives.sweeter, ingredientsFile);
+  ingredientsFile.close();
+  ingredientsFile.open("additives_alcohol.dat",
+		       std::ios::binary | std::ios::out | std::ios::trunc);
+  write_map(machine_ingredients.additives.alcohol, ingredientsFile);
+  ingredientsFile.close();
+  ingredientsFile.open("additives_others.dat",
+		       std::ios::binary | std::ios::out | std::ios::trunc);
+  write_map(machine_ingredients.additives.others, ingredientsFile);
   ingredientsFile.close();
   std::cout << "咖啡机原料初始化完成。" << std::endl;
 }
 
 //是否有原料，如果没有原料则理应执行新建原料流程。
 bool read_ingredients() {
-  std::fstream ingredientsFile;
+  std::ifstream ingredientsFile;
   ingredientsFile.open("ingredients.dat", std::ios::binary | std::ios::in);
   if (!ingredientsFile.is_open())
     return false;
-
-  ingredientsFile >> machine_ingredients.water >> machine_ingredients.coffeeBean;
-  std::string additives_string;
-  std::list<std::string> additives_strings;
+  ingredientsFile.read((char*)&machine_ingredients.water,sizeof(int));
+  ingredientsFile.read((char*)&machine_ingredients.coffeeBean,sizeof(int));
+  ingredientsFile.close();
+  std::string name; int count;
+  size_t size;
+  ingredientsFile.open("additives_milk.dat", std::ios::binary | std::ios::in);
+  if (!ingredientsFile.is_open())
+    return false;
   while (!ingredientsFile.eof()) {
-    ingredientsFile >> additives_string;
-    additives_strings.push_back(additives_string);
+    ingredientsFile.read((char*)&size, sizeof(size_t));
+    name.resize(size);
+    ingredientsFile.read((char*)&name[0],size);
+    ingredientsFile.read((char*)&count,sizeof(int));
+    machine_ingredients.additives.set_milk(name, count);
   }
-
-  for (auto listit = additives_strings.begin(); listit != additives_strings.end();
-      listit++) {
-    std::istringstream stream(additives_string);
-    std::string type, name;
-    int amount;
-    stream >> type;
-    if (type == "milk") {
-      stream >> name >> amount;
-      machine_ingredients.additives.add_milk(name, amount);
-    }
-    else if (type == "syrup") {
-      stream >> name >> amount;
-      machine_ingredients.additives.add_syrup(name, amount);
-    }
-    else if (type == "sweeter") {
-      stream >> name >> amount;
-      machine_ingredients.additives.add_sweeter(name, amount);
-    }
-    else if (type == "alcohol") {
-      stream >> name >> amount;
-      machine_ingredients.additives.add_alcohol(name, amount);
-    }
-    else if (type == "others") {
-      stream >> name >> amount;
-      machine_ingredients.additives.add_other_ingredient(name, amount);
-    }
+  ingredientsFile.close();
+  ingredientsFile.open("additives_syrup.dat", std::ios::binary | std::ios::in);
+  if (!ingredientsFile.is_open())
+    return false;
+  while (!ingredientsFile.eof()) {
+    ingredientsFile.read((char*)&size, sizeof(size_t));
+    name.resize(size);
+    ingredientsFile.read((char*)&name[0],size);
+    ingredientsFile.read((char*)&count,sizeof(int));
+    machine_ingredients.additives.set_syrup(name, count);
   }
+  ingredientsFile.close();
+  ingredientsFile.open("additives_sweeter.dat", std::ios::binary | std::ios::in);
+  if (!ingredientsFile.is_open())
+    return false;
+  while (!ingredientsFile.eof()) {
+    ingredientsFile.read((char*)&size, sizeof(size_t));
+    name.resize(size);
+    ingredientsFile.read((char*)&name[0],size);
+    ingredientsFile.read((char*)&count,sizeof(int));
+    machine_ingredients.additives.set_sweeter(name, count);
+  }
+  ingredientsFile.close();
+  ingredientsFile.open("additives_alcohol.dat", std::ios::binary | std::ios::in);
+  if (!ingredientsFile.is_open())
+    return false;
+  while (!ingredientsFile.eof()) {
+    ingredientsFile.read((char*)&size, sizeof(size_t));
+    name.resize(size);
+    ingredientsFile.read((char*)&name[0],size);
+    ingredientsFile.read((char*)&count,sizeof(int));
+    machine_ingredients.additives.set_alcohol(name, count);
+  }
+  ingredientsFile.close();
+  ingredientsFile.open("additives_others.dat", std::ios::binary | std::ios::in);
+  if (!ingredientsFile.is_open())
+    return false;
+  while (!ingredientsFile.eof()) {
+    ingredientsFile.read((char*)&size, sizeof(size_t));
+    name.resize(size);
+    ingredientsFile.read((char*)&name[0],size);
+    ingredientsFile.read((char*)&count,sizeof(int));
+    machine_ingredients.additives.set_other_ingredient(name, count);
+  }
+  ingredientsFile.close();
   return true;
 }
 
@@ -256,27 +291,32 @@ void print_machine_ingredients(std::fstream &ingredientsFile) {
   ingredientsFile << "\t奶制品：" << std::endl;
   for (it = machine_ingredients.additives.milk.begin();
       it != machine_ingredients.additives.milk.end(); it++) {
-    ingredientsFile << "\t\t名称：" << it->first << "，含量" << it->second;
+    ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
   }
   ingredientsFile << "\t糖浆：" << std::endl;
   for (it = machine_ingredients.additives.syrup.begin();
       it != machine_ingredients.additives.syrup.end(); it++) {
-    ingredientsFile << "\t\t名称：" << it->first << "，含量" << it->second;
+    ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
   }
   ingredientsFile << "\t甜味剂：" << std::endl;
   for (it = machine_ingredients.additives.sweeter.begin();
       it != machine_ingredients.additives.sweeter.end(); it++) {
-    ingredientsFile << "\t\t名称：" << it->first << "，含量" << it->second;
+    ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
   }
   ingredientsFile << "\t酒类：" << std::endl;
   for (it = machine_ingredients.additives.alcohol.begin();
       it != machine_ingredients.additives.alcohol.end(); it++) {
-    ingredientsFile << "\t\t名称：" << it->first << "，含量" << it->second;
+    ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
   }
   ingredientsFile << "\t其他添加剂：" << std::endl;
   for (it = machine_ingredients.additives.others.begin();
       it != machine_ingredients.additives.others.end(); it++) {
-    ingredientsFile << "\t\t名称：" << it->first << "，含量" << it->second;
+    ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
   }
   print_line(ingredientsFile);
 }

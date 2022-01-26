@@ -248,4 +248,4 @@ struct coffee_menu{
 };
 
 //
-#endif /* INCLUDE_FUNCTIONS_H_ */
+#endif /* INCLUDE_STRUCTS_H_ */
