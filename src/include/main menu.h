@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 
 #include<ctime>
 
@@ -8,19 +8,19 @@ int main(void) {
 
     time_t now = time(0);
 
-    struct tm p;//Ö¸Ïò±¾µØÊ±¼äµÄtm½á¹¹Ìå
-    localtime_s(&p, &now);	//ÎÒ¸ù¾ÝÍøÉÏÕÒµÄ×ÊÁÏÐ´µÄ£¬ÎÒÊÔ¹ýÁË£¬ÄÜÅÜ
-    printf("¿§·È»úÄ£ÄâÏµÍ³ µ±Ç°°æ±¾:v1.0 µ±Ç°Ê±¼ä:  ");
-    printf("%04dÄê%02dÔÂ%02dÈÕ  ", p.tm_year + 1900, p.tm_mon + 1, p.tm_mday);
-    printf("%02dÊ±%02d·Ö%02dÃë\n", p.tm_hour, p.tm_min, p.tm_sec);
+    struct tm p;//æŒ‡å‘æœ¬åœ°æ—¶é—´çš„tmç»“æž„ä½“
+    localtime_s(&p, &now);	//æˆ‘æ ¹æ®ç½‘ä¸Šæ‰¾çš„èµ„æ–™å†™çš„ï¼Œæˆ‘è¯•è¿‡äº†ï¼Œèƒ½è·‘
+    printf("å’–å•¡æœºæ¨¡æ‹Ÿç³»ç»Ÿ å½“å‰ç‰ˆæœ¬:v1.0 å½“å‰æ—¶é—´:  ");
+    printf("%04då¹´%02dæœˆ%02dæ—¥  ", p.tm_year + 1900, p.tm_mon + 1, p.tm_mday);
+    printf("%02dæ—¶%02dåˆ†%02dç§’\n", p.tm_hour, p.tm_min, p.tm_sec);
 
-    printf(" ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª\n");
-    printf("¿§·È¶¹Ê£ÓàÁ¿£º£¨µ±Ç°Ê£ÓàµÄ¿§·È¶¹ÖÊÁ¿£©\n");//ºóÃæµÄµ÷ÓÃÎÒÕæ²»»áÁË£¬¾Í°ÝÍÐÄãÁË£¬Ë³±ãµ½Ê±ºò½ÌÎÒÒ»ÏÂ°É
-    printf("Ë®Ê£ÓàÁ¿£º£¨µ±Ç°Ê£ÓàµÄ¿§·È¶¹ÖÊÁ¿£©\n");
-    printf("±¾´ÎÔËÐÐÒÑÖÆ×÷µÄ¿§·ÈÊýÁ¿£ºX ±­ÃÀÊ½µÎÂË / Y ±­ÒâÊ½Å¨Ëõ\n");
-    printf("¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª\n");
-    printf("[0] Ô­ÁÏ¹ÜÀí[1] ²Ëµ¥¹ÜÀí[2] ÐÂÔö¶©µ¥[3] ´òÓ¡Ô¤Éè²Ëµ¥[-1] ½áÊø³ÌÐò\n");
-    printf("¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª\n");
-    printf("ÇëÊäÈëÖ¸Áî£º\n");
-    return 0;//°¦£¬µÚÒ»´ÎÐ´×¢ÊÍ¾¹È»Ö»ÊÇÎªÁËÍÂ²Û£¬Ò²ÊÇÃ»Ë­ÁË
+    printf(" â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”\n");
+    printf("å’–å•¡è±†å‰©ä½™é‡ï¼šï¼ˆå½“å‰å‰©ä½™çš„å’–å•¡è±†è´¨é‡ï¼‰\n");//åŽé¢çš„è°ƒç”¨æˆ‘çœŸä¸ä¼šäº†ï¼Œå°±æ‹œæ‰˜ä½ äº†ï¼Œé¡ºä¾¿åˆ°æ—¶å€™æ•™æˆ‘ä¸€ä¸‹å§
+    printf("æ°´å‰©ä½™é‡ï¼šï¼ˆå½“å‰å‰©ä½™çš„å’–å•¡è±†è´¨é‡ï¼‰\n");
+    printf("æœ¬æ¬¡è¿è¡Œå·²åˆ¶ä½œçš„å’–å•¡æ•°é‡ï¼šX æ¯ç¾Žå¼æ»´æ»¤ / Y æ¯æ„å¼æµ“ç¼©\n");
+    printf("â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”\n");
+    printf("[0] åŽŸæ–™ç®¡ç†[1] èœå•ç®¡ç†[2] æ–°å¢žè®¢å•[3] æ‰“å°é¢„è®¾èœå•[-1] ç»“æŸç¨‹åº\n");
+    printf("â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”â€”\n");
+    printf("è¯·è¾“å…¥æŒ‡ä»¤ï¼š\n");
+    return 0;//å”‰ï¼Œç¬¬ä¸€æ¬¡å†™æ³¨é‡Šç«Ÿç„¶åªæ˜¯ä¸ºäº†åæ§½ï¼Œä¹Ÿæ˜¯æ²¡è°äº†
 }
