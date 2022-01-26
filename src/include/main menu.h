@@ -1,26 +1,17 @@
-#include<iostream>
+#ifndef INCLUDE_MAINMENU_H_
+#define INCLUDE_MAINMENU_H_
+/*
+ * å¤´æ–‡ä»¶ä¿æŠ¤, IDEè‡ªå¸¦ã€‚
+ * #ifndefè¡¨ç¤ºå¦‚æžœæœªå®šä¹‰å¤´æ–‡ä»¶åˆ™è¿›è¡Œä¸€æ¬¡å®šä¹‰ã€‚
+ * è¿™ä¸ªå†™æ³•æ¥è‡ªäºŽCï¼Œè€Œä¸”C++ä¹Ÿéœ€è¦ä½¿ç”¨è¿™ç§æ–¹æ³•ã€‚
+ */
+#include <ctime>// Cè¯­è¨€ æ—¶é—´
+#include "include/structs.h" // è‡ªå·±çš„ç»“æž„ä½“å¤´æ–‡ä»¶
+#include "include/functions.h" // è‡ªå·±çš„å‡½æ•°å¤´æ–‡ä»¶
 
-#include<ctime>
-
-using namespace std;
-
-int main(void) {
-
-    time_t now = time(0);
-
-    struct tm p;//Ö¸Ïò±¾µØÊ±¼äµÄtm½á¹¹Ìå
-    localtime_s(&p, &now);	//ÎÒ¸ù¾ÝÍøÉÏÕÒµÄ×ÊÁÏÐ´µÄ£¬ÎÒÊÔ¹ýÁË£¬ÄÜÅÜ
-    printf("¿§·È»úÄ£ÄâÏµÍ³ µ±Ç°°æ±¾:v1.0 µ±Ç°Ê±¼ä:  ");
-    printf("%04dÄê%02dÔÂ%02dÈÕ  ", p.tm_year + 1900, p.tm_mon + 1, p.tm_mday);
-    printf("%02dÊ±%02d·Ö%02dÃë\n", p.tm_hour, p.tm_min, p.tm_sec);
-
-    printf(" ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª\n");
-    printf("¿§·È¶¹Ê£ÓàÁ¿£º£¨µ±Ç°Ê£ÓàµÄ¿§·È¶¹ÖÊÁ¿£©\n");//ºóÃæµÄµ÷ÓÃÎÒÕæ²»»áÁË£¬¾Í°ÝÍÐÄãÁË£¬Ë³±ãµ½Ê±ºò½ÌÎÒÒ»ÏÂ°É
-    printf("Ë®Ê£ÓàÁ¿£º£¨µ±Ç°Ê£ÓàµÄ¿§·È¶¹ÖÊÁ¿£©\n");
-    printf("±¾´ÎÔËÐÐÒÑÖÆ×÷µÄ¿§·ÈÊýÁ¿£ºX ±­ÃÀÊ½µÎÂË / Y ±­ÒâÊ½Å¨Ëõ\n");
-    printf("¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª\n");
-    printf("[0] Ô­ÁÏ¹ÜÀí[1] ²Ëµ¥¹ÜÀí[2] ÐÂÔö¶©µ¥[3] ´òÓ¡Ô¤Éè²Ëµ¥[-1] ½áÊø³ÌÐò\n");
-    printf("¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª\n");
-    printf("ÇëÊäÈëÖ¸Áî£º\n");
-    return 0;//°¦£¬µÚÒ»´ÎÐ´×¢ÊÍ¾¹È»Ö»ÊÇÎªÁËÍÂ²Û£¬Ò²ÊÇÃ»Ë­ÁË
+void main_menu(){
+  print_line();
+  print_line();
 }
+
+#endif /* INCLUDE_MAINMENU_H_ */
