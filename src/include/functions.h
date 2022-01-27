@@ -17,6 +17,7 @@
 #include <iterator>
 #include <algorithm> // C++算法库
 #include "structs.h" // 自己的结构体头文件
+#include <ctime>// C语言 时间
 
 //输出一个80字符的分隔线
 //80字符的标准不过分吧？这可是最适合打印的长度标准！
@@ -52,6 +53,18 @@ void press_any_button() {
   std::cin.clear();
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
+  std::cin.get();
+}
+
+//系统状态输出函数
+void system_status() {
+  clear_screen();
+  std::time_t now = std::time(nullptr);
+  std::tm *ltm = std::localtime(&now);
+  std::printf("咖啡机模拟系统 当前版本:v1.0 当前时间:  ");
+  std::printf("%04d年%02d月%02d日  ", ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday);
+  std::printf("%02d时%02d分%02d秒\n", ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
+  print_line();
 }
 
 //输入用函数
