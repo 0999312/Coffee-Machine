@@ -6,8 +6,8 @@
 #include "include/main_menu.h" // 主菜单头文件
 #ifdef _WIN32
 #include <windows.h>
-#endif
-int main() {
+
+int main (){
   //使用UTF-8编码，好像是Windows的老毛病
   #ifdef _WIN32
     SetConsoleCP(65001);
@@ -20,14 +20,21 @@ int main() {
     std::cout<<"检测到原料文件异常，进行初始化工作。"<<std::endl;
     press_any_button();
     create_new_ingredients();
-  }else{
+  }
+  /*
+  else{
     std::cout<<"已初始化成功。"<<std::endl;
     press_any_button();
   }
+  */
   std::fstream ingredientsFile;
   ingredientsFile.open("ingredients.txt", std::ios::out | std::ios::trunc);
   print_machine_ingredients(ingredientsFile);
   ingredientsFile.close();
+  
+  // 主菜单
   main_menu();
   return 0;
 }
+
+#endif
