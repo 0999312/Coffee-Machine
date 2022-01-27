@@ -1,4 +1,4 @@
-#ifndef INCLUDE_MAINMENU_H_
+    #ifndef INCLUDE_MAINMENU_H_
 #define INCLUDE_MAINMENU_H_
 /*
  * 头文件保护, IDE自带。
