@@ -14,7 +14,7 @@
 // 对于Map的操作，建议封装函数；对于剩下两个int变量的操作封装交给其他人完成。
 
 // 咖啡添加剂
-struct coffee_additives{
+struct coffee_additives {
     // 奶制品
     std::map<std::string, int> milk;
     // 糖浆
@@ -272,29 +272,29 @@ struct coffee_additives{
     }
 
     bool use_ingredient(std::string name, int count) {
-      if(use_milk(name, count))
+      if (use_milk(name, count))
 	return true;
-      if(use_syrup(name, count))
+      if (use_syrup(name, count))
 	return true;
-      if(use_sweeter(name, count))
+      if (use_sweeter(name, count))
 	return true;
-      if(use_alcohol(name, count))
+      if (use_alcohol(name, count))
 	return true;
-      if(use_other_ingredient(name, count))
+      if (use_other_ingredient(name, count))
 	return true;
       return false;
     }
 
     bool delete_ingredient(std::string name) {
-      if(delete_milk(name))
+      if (delete_milk(name))
 	return true;
-      if(delete_syrup(name))
+      if (delete_syrup(name))
 	return true;
-      if(delete_sweeter(name))
+      if (delete_sweeter(name))
 	return true;
-      if(delete_alcohol(name))
+      if (delete_alcohol(name))
 	return true;
-      if(delete_other_ingredient(name))
+      if (delete_other_ingredient(name))
 	return true;
       return false;
     }
@@ -312,7 +312,7 @@ struct coffee_ingredients {
 } machine_ingredients;
 
 // 咖啡菜单表，当然是按一杯咖啡的量进行计算。
-struct coffee_menu{
+struct coffee_menu {
     // 咖啡名称
     std::string name;
     // 咖啡基底类型，true代表使用意式浓缩，false代表使用美式滴滤。
