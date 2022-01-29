@@ -11,7 +11,6 @@
 #include <iostream> // C++ 风格输入输出，使用输入输出流进行操作。
 #include <utility> // C++ 通用工具头文件，pair定义于此
 #include <list> //C++ STL实现 双向链表（我们甚至不需要自己写链表了，YES）
-#include <fstream> //C++ 文件输入输出流
 #include <sstream> //C++ 字符串流
 #include <cstdlib> //C语言的stdlib，用C++调用时候建议使用<c***>（***代表原来的头文件名称）
 #include <iterator>
@@ -53,6 +52,16 @@ void press_any_button() {
   print_line();
   std::cout << "按任意键继续。" << std::endl;
   std::cin.clear();
+  while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
+    continue;
+}
+
+//前面那个按任意键函数在菜单界面会跳过按键继续，这个加了一个获取字符
+void press_any_button_1() {
+  print_line();
+  std::cout << "按任意键继续。" << std::endl;
+  std::cin.clear();
+  std::cin.get();
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
 }
@@ -177,6 +186,77 @@ void input_other_ingredient(coffee_additives &new_additives) {
   while (flag);
 }
 
+//删除奶制品
+void delete_milk(coffee_additives &new_additives) {
+  std::string name;
+  bool flag = false;
+  do {
+    std::cout << "请输入您想要删除的奶制品名称。" << std::endl;
+    std::cin >> name;
+    new_additives.delete_milk(name);
+    std::cout << "您还需要继续删除其他奶制品吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+}
+
+//删除糖浆
+void delete_syrup(coffee_additives &new_additives) {
+  std::string name;
+  bool flag = false;
+  do {
+    std::cout << "请输入您想要删除的糖浆名称。" << std::endl;
+    std::cin >> name;
+    new_additives.delete_syrup(name);
+    std::cout << "您还需要继续删除其他糖浆吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+}
+
+//删除甜味剂
+void delete_sweeter(coffee_additives &new_additives) {
+  std::string name;
+  bool flag = false;
+  do {
+    std::cout << "请输入您想要删除的甜味剂名称。" << std::endl;
+    std::cin >> name;
+    new_additives.delete_sweeter(name);
+    std::cout << "您还需要继续删除其他甜味剂吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+}
+
+//删除酒类
+void delete_alcohol(coffee_additives &new_additives) {
+  std::string name;
+  bool flag = false;
+  do {
+    std::cout << "请输入您想要删除的酒类名称。" << std::endl;
+    std::cin >> name;
+    new_additives.delete_alcohol(name);
+    std::cout << "您还需要继续删除其他酒类吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+}
+
+//删除其他添加剂
+void delete_other_ingredient(coffee_additives &new_additives) {
+  std::string name;
+  bool flag = false;
+  do {
+    std::cout << "请输入您想要删除的添加剂名称。" << std::endl;
+    std::cin >> name;
+    new_additives.delete_other_ingredient(name);
+    std::cout << "您还需要继续删除其他添加剂吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+}
+
+
 void setting_additives(coffee_additives &new_additives) {
 
   bool skip_flag = false;
@@ -227,8 +307,6 @@ coffee_additives create_new_coffee_additives() {
 
 //创建新的原料
 void create_new_ingredients() {
-  std::ofstream ingredientsFile;
-  ingredientsFile.open("ingredients.json", std::ios::out | std::ios::trunc);
   bool flag = false;
   do {
     clear_screen();
@@ -252,8 +330,6 @@ void create_new_ingredients() {
     flag = input_bool();
   }
   while (flag);
-  ingredientsFile << gen_ingredient_string();
-  ingredientsFile.close();
   std::cout << "咖啡机原料初始化完成。" << std::endl;
 }
 
@@ -268,7 +344,49 @@ bool read_ingredients() {
   return true;
 }
 
-void print_machine_ingredients(std::fstream &ingredientsFile) {
+//输出原料信息到终端
+void print_machine_ingredients() {
+  print_line();
+  std::cout << "水量：" << machine_ingredients.water << std::endl;
+  std::cout << "咖啡豆：" << machine_ingredients.coffeeBean << std::endl;
+  std::map<std::string, int>::iterator it;
+  print_line();
+  std::cout << "咖啡添加剂：" << std::endl;
+  std::cout << "\t奶制品：" << std::endl;
+  for (it = machine_ingredients.additives.milk.begin();
+      it != machine_ingredients.additives.milk.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
+  }
+  std::cout << "\t糖浆：" << std::endl;
+  for (it = machine_ingredients.additives.syrup.begin();
+      it != machine_ingredients.additives.syrup.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
+  }
+  std::cout << "\t甜味剂：" << std::endl;
+  for (it = machine_ingredients.additives.sweeter.begin();
+      it != machine_ingredients.additives.sweeter.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
+  }
+  std::cout << "\t酒类：" << std::endl;
+  for (it = machine_ingredients.additives.alcohol.begin();
+      it != machine_ingredients.additives.alcohol.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
+  }
+  std::cout << "\t其他添加剂：" << std::endl;
+  for (it = machine_ingredients.additives.others.begin();
+      it != machine_ingredients.additives.others.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
+	<< std::endl;
+  }
+  print_line();
+}
+//输出原料信息到文件
+void print_machine_ingredients_file() {
+  std::fstream ingredientsFile;
   print_line(ingredientsFile);
   ingredientsFile << "水量：" << machine_ingredients.water << std::endl;
   ingredientsFile << "咖啡豆：" << machine_ingredients.coffeeBean << std::endl;
