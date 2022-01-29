@@ -19,7 +19,6 @@
 #include "structs.h" // 自己的结构体头文件
 #include "json_util.h" // 自己的Json工具头文件
 
-
 //输出一个80字符的分隔线
 //80字符的标准不过分吧？这可是最适合打印的长度标准！
 void print_line() {
@@ -64,6 +63,15 @@ void press_any_button_1() {
   std::cin.get();
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
+}
+
+std::string time_string_now() {
+  std::time_t now = std::time(nullptr);
+  std::tm *ltm = std::localtime(&now);\
+  return std::to_string(ltm->tm_year + 1900) + '_'
+      + std::to_string(ltm->tm_mon + 1) + '_' + std::to_string(ltm->tm_mday)
+      + '_' + std::to_string(ltm->tm_hour) + '_' + std::to_string(ltm->tm_min)
+      + '_' + std::to_string(ltm->tm_sec);
 }
 
 //系统状态输出函数
@@ -269,7 +277,6 @@ void delete_other_ingredient(coffee_additives &new_additives) {
   while (flag);
 }
 
-
 void setting_additives(coffee_additives &new_additives) {
 
   bool skip_flag = false;
@@ -352,9 +359,68 @@ bool read_ingredients() {
   ingredientsFile.open("ingredients.json", std::ios::in);
   if (!ingredientsFile.is_open())
     return false;
-  read_ingredient_json(ingredientsFile);
+  bool flag = read_ingredient_json(ingredientsFile);
   ingredientsFile.close();
-  return true;
+  return flag;
+}
+
+//是否有预设菜单，如果没有则不执行任何行为。
+bool read_machine_menus() {
+  std::ifstream menusFile;
+  menusFile.open("drinks_menu.json", std::ios::in);
+  if (!menusFile.is_open())
+    return false;
+  bool flag = read_machine_menu(menusFile);
+  menusFile.close();
+  return flag;
+}
+
+void print_coffee_additives(coffee_additives& additives) {
+  std::map<std::string, int>::iterator it;
+  print_line();
+  std::cout << "咖啡添加剂：" << std::endl;
+  std::cout << "\t奶制品：" << std::endl;
+  for (it = additives.milk.begin();
+      it != additives.milk.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
+  }
+  std::cout << "\t糖浆：" << std::endl;
+  for (it = additives.syrup.begin();
+      it != additives.syrup.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
+  }
+  std::cout << "\t甜味剂：" << std::endl;
+  for (it = additives.sweeter.begin();
+      it != additives.sweeter.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
+  }
+  std::cout << "\t酒类：" << std::endl;
+  for (it = additives.alcohol.begin();
+      it != additives.alcohol.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
+  }
+  std::cout << "\t其他添加剂：" << std::endl;
+  for (it = additives.others.begin();
+      it != additives.others.end(); it++) {
+    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
+  }
+  print_line();
+}
+
+//制作咖啡，消耗原料。
+bool brew_coffee(coffee_menu &menu){
+  bool flag_base, flag_additives;
+  if(menu.type){
+    flag_base = machine_ingredients.use_water(menu.amount * 40) && machine_ingredients.use_coffee_bean(menu.amount * 40);
+  }else{
+    flag_base = machine_ingredients.use_water(menu.amount * 15) && machine_ingredients.use_coffee_bean(menu.amount);
+  }
+  if(!flag_base)
+    std::cout << "制作咖啡基底时出现材料短缺错误！" << std::endl;
+  flag_additives = machine_ingredients.additives.use_additives(menu.additives);
+  if(!flag_base)
+    std::cout << "添加添加剂时出现材料短缺错误！" << std::endl;
+  return flag_base && flag_additives;
 }
 
 //输出原料信息到终端
@@ -362,94 +428,103 @@ void print_machine_ingredients() {
   print_line();
   std::cout << "水量：" << machine_ingredients.water << std::endl;
   std::cout << "咖啡豆：" << machine_ingredients.coffeeBean << std::endl;
-  std::map<std::string, int>::iterator it;
-  print_line();
-  std::cout << "咖啡添加剂：" << std::endl;
-  std::cout << "\t奶制品：" << std::endl;
-  for (it = machine_ingredients.additives.milk.begin();
-      it != machine_ingredients.additives.milk.end(); it++) {
-    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
-	<< std::endl;
-  }
-  std::cout << "\t糖浆：" << std::endl;
-  for (it = machine_ingredients.additives.syrup.begin();
-      it != machine_ingredients.additives.syrup.end(); it++) {
-    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
-	<< std::endl;
-  }
-  std::cout << "\t甜味剂：" << std::endl;
-  for (it = machine_ingredients.additives.sweeter.begin();
-      it != machine_ingredients.additives.sweeter.end(); it++) {
-    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
-	<< std::endl;
-  }
-  std::cout << "\t酒类：" << std::endl;
-  for (it = machine_ingredients.additives.alcohol.begin();
-      it != machine_ingredients.additives.alcohol.end(); it++) {
-    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
-	<< std::endl;
-  }
-  std::cout << "\t其他添加剂：" << std::endl;
-  for (it = machine_ingredients.additives.others.begin();
-      it != machine_ingredients.additives.others.end(); it++) {
-    std::cout << "\t\t名称：" << it->first << "，含量：" << it->second
-	<< std::endl;
-  }
-  print_line();
+  print_coffee_additives(machine_ingredients.additives);
 }
-//输出原料信息到文件
-void print_machine_ingredients_file() {
-  std::fstream ingredientsFile;
-  print_line(ingredientsFile);
-  ingredientsFile << "水量：" << machine_ingredients.water << std::endl;
-  ingredientsFile << "咖啡豆：" << machine_ingredients.coffeeBean << std::endl;
-  std::map<std::string, int>::iterator it;		//定义map迭代器，用于遍历map。
+
+//输出原料信息到终端
+void print_coffee_menu(coffee_menu &menu) {
+  print_line();
+  std::cout << "咖啡名：" << menu.name << std::endl;
+  std::cout << "咖啡基底："<< (menu.type?"意式浓缩":"美式滴滤") << std::endl;
+  std::cout << "咖啡量：" << menu.amount << std::endl;
+  print_coffee_additives(menu.additives);
+}
+
+void print_coffee_additives_files(std::fstream &ingredientsFile, coffee_additives& additives) {
+  std::map<std::string, int>::iterator it; //定义map迭代器，用于遍历map。
   print_line(ingredientsFile);
   ingredientsFile << "咖啡添加剂：" << std::endl;
   ingredientsFile << "\t奶制品：" << std::endl;
-  for (it = machine_ingredients.additives.milk.begin();
-      it != machine_ingredients.additives.milk.end(); it++) {
+  for (it = additives.milk.begin();
+      it != additives.milk.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t糖浆：" << std::endl;
-  for (it = machine_ingredients.additives.syrup.begin();
-      it != machine_ingredients.additives.syrup.end(); it++) {
+  for (it = additives.syrup.begin();
+      it != additives.syrup.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t甜味剂：" << std::endl;
-  for (it = machine_ingredients.additives.sweeter.begin();
-      it != machine_ingredients.additives.sweeter.end(); it++) {
+  for (it = additives.sweeter.begin();
+      it != additives.sweeter.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t酒类：" << std::endl;
-  for (it = machine_ingredients.additives.alcohol.begin();
-      it != machine_ingredients.additives.alcohol.end(); it++) {
+  for (it = additives.alcohol.begin();
+      it != additives.alcohol.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t其他添加剂：" << std::endl;
-  for (it = machine_ingredients.additives.others.begin();
-      it != machine_ingredients.additives.others.end(); it++) {
+  for (it = additives.others.begin();
+      it != additives.others.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   print_line(ingredientsFile);
 }
 
-coffee_menu create_new_coffee_menu(coffee_menu &new_menu){
-  std::cout << "请输入基底咖啡的类型。"<<std::endl<<"注意：0为美式滴滤，1为意式浓缩。" << std::endl;
-  new_menu.type = (input_int_value() ==1) ? true : false;
-  std::cout << (new_menu.type?"请输入浓缩咖啡的份量。":"请输入美式滴滤的咖啡使用量。")<<std::endl;
+//输出原料信息到文件
+void print_machine_ingredients_file() {
+  std::fstream ingredientsFile;
+  print_line(ingredientsFile);
+  ingredientsFile << "水量：" << machine_ingredients.water << std::endl;
+  ingredientsFile << "咖啡豆：" << machine_ingredients.coffeeBean << std::endl;
+  print_coffee_additives_files(ingredientsFile, machine_ingredients.additives);
+}
+
+coffee_menu setting_coffee_menu(coffee_menu &new_menu) {
+  std::cout << "请输入基底咖啡的类型。" << std::endl << "注意：0为美式滴滤，1为意式浓缩。" << std::endl;
+  new_menu.type = (input_int_value() == 1) ? true : false;
+  std::cout << (new_menu.type ? "请输入浓缩咖啡的份量。" : "请输入美式滴滤的咖啡使用量。") << std::endl;
   input_value(new_menu.amount);
-  std::cout << "您需要其他的添加剂吗？"<<std::endl;
+  std::cout << "您需要其他的添加剂吗？" << std::endl;
   bool flag = input_bool();
-  if(flag){
+  if (flag) {
     setting_additives(new_menu.additives);
   }
   return new_menu;
+}
+
+void add_new_coffee_menu() {
+  coffee_menu new_menu;
+  bool flag;
+  do {
+    std::cout << "请输入新菜单的名字。" << std::endl;
+    std::cin >> new_menu.name;
+    setting_coffee_menu(new_menu);
+    std::cout << "您确定使用这个菜单了吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (!flag);
+  machine_menus.push_back(new_menu);
+}
+
+void add_custom_order() {
+  coffee_menu custom_menu;
+  bool flag;
+  do {
+    custom_menu.name = "CustomOrder:" + time_string_now();
+    setting_coffee_menu(custom_menu);
+    std::cout << "您确定使用这个菜单了吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (!flag);
+  completed_menus.push_back(custom_menu);
+  brew_coffee(custom_menu);
 }
 
 #endif /* INCLUDE_FUNCTIONS_H_ */

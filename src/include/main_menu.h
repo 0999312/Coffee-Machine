@@ -21,10 +21,15 @@ void main_menu() {
     std::printf("水剩余量：%d\n", machine_ingredients.water);
     std::printf("本次运行已制作的咖啡数量：0 杯美式滴滤 / 0 杯意式浓缩\n");
     print_line();
-    std::printf("[0] 原料管理 [1] 菜单管理 [2] 新增订单 [3] 打印预设菜单 [4] 初始化咖啡机 [-1] 结束程序\n");
+    std::printf("[0] 原料管理 [1] 菜单管理 [2] 新增订单 [3] 打印菜单 [4] 初始化咖啡机 [-1] 结束程序\n");
     std::cin >> button;
-    if (button == -1)
+    if (button == -1){
+      std::ofstream ingredientsFile;
+      ingredientsFile.open("drinks_menu.json", std::ios::out | std::ios::trunc);
+      ingredientsFile << gen_machine_menu_string();
+      ingredientsFile.close();
       break;
+    }
     switch (button) {
       case 0:
 	ingredient_management();

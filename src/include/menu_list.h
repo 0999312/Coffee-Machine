@@ -21,24 +21,24 @@ coffee_additives add_other_ingredient() {
     if (button == 9)
       break;
     switch (button) {
-      case 0 : 
-        input_milk(new_additives);
-        break;
-      case 1 : 
-	      input_syrup(new_additives);
-        break;
-      case 2 : 
-	      input_sweeter(new_additives);
-        break;
-      case 3 :
-	      input_alcohol(new_additives);
-        break;
-      case 4 :
-        input_other_ingredient(new_additives);
-        break;
+      case 0:
+	input_milk(new_additives);
+	break;
+      case 1:
+	input_syrup(new_additives);
+	break;
+      case 2:
+	input_sweeter(new_additives);
+	break;
+      case 3:
+	input_alcohol(new_additives);
+	break;
+      case 4:
+	input_other_ingredient(new_additives);
+	break;
       default:
-	      std::printf("输入错误，请重新输入：\n");
-	      break;
+	std::printf("输入错误，请重新输入：\n");
+	break;
     }
     press_any_button_1();
   }
@@ -64,20 +64,20 @@ void add_ingredient() {
     if (button == 9)
       break;
     switch (button) {
-       case 0 : 
-        std::cout << "请输入咖啡机内当前的水量。" << std::endl;
-        input_value(machine_ingredients.water);
-        break;
-       case 1 : 
-        std::cout << "请输入咖啡机内当前的咖啡豆数量。" << std::endl;
-        input_value(machine_ingredients.coffeeBean);
-        break;
-       case 2 : 
-        machine_ingredients.additives = add_other_ingredient();
-        break;
+      case 0:
+	std::cout << "请输入咖啡机内当前的水量。" << std::endl;
+	input_value(machine_ingredients.water);
+	break;
+      case 1:
+	std::cout << "请输入咖啡机内当前的咖啡豆数量。" << std::endl;
+	input_value(machine_ingredients.coffeeBean);
+	break;
+      case 2:
+	machine_ingredients.additives = add_other_ingredient();
+	break;
       default:
-	      std::printf("输入错误，请重新输入：\n");
-	      break;
+	std::printf("输入错误，请重新输入：\n");
+	break;
     }
     press_any_button_1();
   }
@@ -98,24 +98,24 @@ void delete_ingredient() {
     if (button == 9)
       break;
     switch (button) {
-      case 0 : 
-        delete_milk(name);
-        break;
-      case 1 : 
-	      delete_syrup(name);
-        break;
-      case 2 : 
-	      delete_sweeter(name);
-        break;
-      case 3 :
-	      delete_alcohol(name);
-        break;
-      case 4 :
-        delete_other_ingredient(name);
-        break;
+      case 0:
+	delete_milk(name);
+	break;
+      case 1:
+	delete_syrup(name);
+	break;
+      case 2:
+	delete_sweeter(name);
+	break;
+      case 3:
+	delete_alcohol(name);
+	break;
+      case 4:
+	delete_other_ingredient(name);
+	break;
       default:
-	      std::printf("输入错误，请重新输入：\n");
-	      break;
+	std::printf("输入错误，请重新输入：\n");
+	break;
     }
     press_any_button_1();
   }
@@ -135,18 +135,18 @@ void ingredient_management() {
     if (button == 9)
       break;
     switch (button) {
-       case 0 : 
-        add_ingredient();
-        break;
-       case 1 : 
-        delete_ingredient();
-        break;
-       case 2 : 
-        print_machine_ingredients();
-        break;
+      case 0:
+	add_ingredient();
+	break;
+      case 1:
+	delete_ingredient();
+	break;
+      case 2:
+	print_machine_ingredients();
+	break;
       default:
-	      std::printf("输入错误，请重新输入：\n");
-	      break;
+	std::printf("输入错误，请重新输入：\n");
+	break;
     }
     press_any_button_1();
   }
@@ -163,10 +163,8 @@ void menu_management() {
     if (button == 9)
       break;
     switch (button) {
-      /*
-       case 0 : break;
-       case 1 : break;
-       */
+       case 0 : add_new_coffee_menu();break;
+//       case 1 : break;
       default:
 	std::printf("未完成，请返回上一级\n");
 	break;
@@ -186,13 +184,15 @@ void add_order() {
     if (button == 9)
       break;
     switch (button) {
-      /*
-       case 0 : break;
-       case 1 : break;
-       */
+
+//       case 0 : break;
+      case 1:
+	add_custom_order();
+	break;
+
       default:
-	      std::printf("未完成，请返回上一级\n");
-	      break;
+	std::printf("未完成，请返回上一级\n");
+	break;
     }
     press_any_button_1();
   }
@@ -201,6 +201,9 @@ void add_order() {
 //打印预设菜单
 void print_preset_menu() {
   system_status();
-  std::printf("未完成\n");
+  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
+    print_line();
+    print_coffee_menu(*i);
+  }
   press_any_button_1();
 }

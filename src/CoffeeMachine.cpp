@@ -16,9 +16,6 @@ int main() {
   SetConsoleOutputCP(65001);
 #endif
 
-  // 咖啡机内菜单
-  std::list<coffee_menu> machine_menus;
-
   if (!read_ingredients()) {
     std::cout << "检测到原料文件异常，进行初始化工作。" << std::endl;
     press_any_button();
@@ -26,6 +23,10 @@ int main() {
     ingredientsFile.open("ingredients.txt", std::ios::out | std::ios::trunc);
     create_new_ingredients();
     ingredientsFile.close();
+  }
+  if (!read_machine_menus()) {
+    std::cout << "检测到预设菜单异常！" << std::endl;
+    press_any_button();
   }
   /*
    else{
