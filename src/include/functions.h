@@ -304,7 +304,6 @@ void delete_other_ingredient(coffee_additives &new_additives) {
 }
 
 void setting_additives(coffee_additives &new_additives) {
-
   bool skip_flag = false;
   std::cout << "您想要添加奶制品吗？" << std::endl;
   skip_flag = input_bool();

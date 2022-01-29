@@ -9,7 +9,7 @@
 > 解决方法：见src/functions.h/clear_screen()函数。
 
 无法直接read/write的map
-> 问题内容：STL的map因为动态内存等原因，是没有办法直接利用read和write的（当然也没有办法直接赋值结构体！）
+> 问题内容：STL的map因为动态内存等原因，是没有办法直接利用read和write的（当然也没有办法直接赋值结构体！）  
 > 问题分析：需要一个读写Map的方案  
 > 解决方法：直接使用现代化的JSON进行数据存储，用JSON序列化Map和List即可轻松完成数据存储。
 
