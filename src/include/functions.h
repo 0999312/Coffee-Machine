@@ -214,11 +214,22 @@ void delete_milk(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的奶制品名称。" << std::endl;
     std::cin >> name;
-    new_additives.delete_milk(name);
+    if(!new_additives.delete_milk(name))
+      std::cout << "移除失败，未发现该奶制品。" << std::endl;
     std::cout << "您还需要继续删除其他奶制品吗？" << std::endl;
     flag = input_bool();
   }
   while (flag);
+}
+
+bool delete_menu(std::string &menu_name) {
+  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
+    if(i->name == menu_name){
+      machine_menus.erase(i);
+      return true;
+    }
+  }
+  return false;
 }
 
 //删除糖浆
@@ -228,7 +239,8 @@ void delete_syrup(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的糖浆名称。" << std::endl;
     std::cin >> name;
-    new_additives.delete_syrup(name);
+    if(!new_additives.delete_syrup(name))
+      std::cout << "移除失败，未发现该糖浆。" << std::endl;
     std::cout << "您还需要继续删除其他糖浆吗？" << std::endl;
     flag = input_bool();
   }
@@ -242,7 +254,8 @@ void delete_sweeter(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的甜味剂名称。" << std::endl;
     std::cin >> name;
-    new_additives.delete_sweeter(name);
+    if(!new_additives.delete_sweeter(name))
+      std::cout << "移除失败，未发现该甜味剂。" << std::endl;
     std::cout << "您还需要继续删除其他甜味剂吗？" << std::endl;
     flag = input_bool();
   }
@@ -256,7 +269,8 @@ void delete_alcohol(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的酒类名称。" << std::endl;
     std::cin >> name;
-    new_additives.delete_alcohol(name);
+    if(!new_additives.delete_alcohol(name))
+      std::cout << "移除失败，未发现该酒类。" << std::endl;
     std::cout << "您还需要继续删除其他酒类吗？" << std::endl;
     flag = input_bool();
   }
@@ -270,7 +284,8 @@ void delete_other_ingredient(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的添加剂名称。" << std::endl;
     std::cin >> name;
-    new_additives.delete_other_ingredient(name);
+    if(!new_additives.delete_other_ingredient(name))
+      std::cout << "移除失败，未发现该添加剂。" << std::endl;
     std::cout << "您还需要继续删除其他添加剂吗？" << std::endl;
     flag = input_bool();
   }

@@ -6,6 +6,59 @@
 
 //------------------------------------------------------------------------
 //三级子菜单
+
+//新增订单
+void add_order() {
+  int button = 10;
+  while (true) {
+    system_status();
+    std::printf("-------------------新增订单-------------------\n");
+    std::printf("[0] 选择菜单 [1] 自定义菜单 [9] 返回主界面\n");
+    std::cin >> button;
+    if (button == 9)
+      break;
+    switch (button) {
+
+//       case 0 : break;
+      case 1:
+	add_custom_order();
+	break;
+
+      default:
+	std::printf("未完成，请返回上一级\n");
+	break;
+    }
+    press_any_button_1();
+  }
+}
+
+//打印预设菜单
+void print_preset_menu() {
+  system_status();
+  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+    print_line();
+    print_coffee_menu(*i);
+  }
+  press_any_button_1();
+}
+
+void delete_drink_menu() {
+  std::string menu_name;
+  bool flag = false, has_menu = false;
+  do {
+    for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+      print_line();
+      print_coffee_menu(*i);
+    }
+    std::cout << "请输入您想要移除的菜单。" << std::endl;
+    std::cin >> menu_name;
+    delete_menu(menu_name);
+    std::cout << "您还需要继续删除其他菜单吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (flag);
+}
+
 //添加其他原料子菜单
 coffee_additives add_other_ingredient() {
   coffee_additives new_additives;
@@ -91,8 +144,6 @@ void delete_ingredient() {
     system_status();
     std::printf("---------------选择删除原料类型---------------\n");
     std::printf("[0] 奶制品 [1] 糖浆 [2] 甜味剂 [3] 酒 [4] 其他原料 [9] 返回上一级\n");
-    std::cout << "请注意，所有的数据均按照质量计算。" << std::endl;
-    std::cout << "数值对应为原料的克数，即当前有多少克原料。" << std::endl;
     print_line();
     std::cin >> button;
     if (button == 9)
@@ -163,33 +214,12 @@ void menu_management() {
     if (button == 9)
       break;
     switch (button) {
-       case 0 : add_new_coffee_menu();break;
-//       case 1 : break;
-      default:
-	std::printf("未完成，请返回上一级\n");
+      case 0:
+	add_new_coffee_menu();
 	break;
-    }
-    press_any_button_1();
-  }
-}
-
-//新增订单
-void add_order() {
-  int button = 10;
-  while (true) {
-    system_status();
-    std::printf("-------------------新增订单-------------------\n");
-    std::printf("[0] 选择菜单 [1] 自定义菜单 [9] 返回主界面\n");
-    std::cin >> button;
-    if (button == 9)
-      break;
-    switch (button) {
-
-//       case 0 : break;
       case 1:
-	add_custom_order();
+	delete_drink_menu();
 	break;
-
       default:
 	std::printf("未完成，请返回上一级\n");
 	break;
@@ -198,12 +228,3 @@ void add_order() {
   }
 }
 
-//打印预设菜单
-void print_preset_menu() {
-  system_status();
-  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
-    print_line();
-    print_coffee_menu(*i);
-  }
-  press_any_button_1();
-}
