@@ -78,6 +78,19 @@ void input_value(int &value) {
       continue;
   }
 }
+
+//输入用函数
+int input_int_value() {
+  int value;
+  while (!(std::cin >> value)) {
+    std::cout << "输入错误，请重新输入。" << std::endl;
+    std::cin.clear();
+    while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
+      continue;
+  }
+  return value;
+}
+
 //输入bool用函数
 bool input_bool() {
   bool value;
@@ -306,6 +319,19 @@ void print_machine_ingredients(std::fstream &ingredientsFile) {
 	<< std::endl;
   }
   print_line(ingredientsFile);
+}
+
+coffee_menu create_new_coffee_menu(coffee_menu &new_menu){
+  std::cout << "请输入基底咖啡的类型。"<<std::endl<<"注意：0为美式滴滤，1为意式浓缩。" << std::endl;
+  new_menu.type = (input_int_value() ==1) ? true : false;
+  std::cout << (new_menu.type?"请输入浓缩咖啡的份量。":"请输入美式滴滤的咖啡使用量。")<<std::endl;
+  input_value(new_menu.amount);
+  std::cout << "您需要其他的添加剂吗？"<<std::endl;
+  bool flag = input_bool();
+  if(flag){
+    setting_additives(new_menu.additives);
+  }
+  return new_menu;
 }
 
 #endif /* INCLUDE_FUNCTIONS_H_ */

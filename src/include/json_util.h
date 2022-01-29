@@ -94,8 +94,7 @@ bool read_ingredient_json(std::ifstream &file) {
   rapidjson::IStreamWrapper isw { file };
   doc.ParseStream(isw);
   if (doc.HasParseError()) {
-    std::cout << "JSON Error  : " << doc.GetParseError() << std::endl
-	     << "Offset : " << doc.GetErrorOffset() << std::endl;
+    std::cout << "JSON Error  : " << doc.GetParseError() << std::endl << "Offset : " << doc.GetErrorOffset() << std::endl;
     return false;
   }
   rapidjson::Value::ConstMemberIterator iter = doc.FindMember("water");
