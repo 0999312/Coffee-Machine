@@ -19,6 +19,8 @@
 #include "structs.h" // 自己的结构体头文件
 #include "json_util.h" // 自己的Json工具头文件
 
+int coffee_count = 0;
+
 //输出一个80字符的分隔线
 //80字符的标准不过分吧？这可是最适合打印的长度标准！
 void print_line() {
@@ -230,6 +232,15 @@ bool delete_menu(std::string &menu_name) {
     }
   }
   return false;
+}
+
+coffee_menu& find_menu(std::string &menu_name) {
+  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
+    if(i->name == menu_name){
+      return *i;
+    }
+  }
+  return *machine_menus.end();
 }
 
 //删除糖浆
@@ -448,7 +459,6 @@ void print_machine_ingredients() {
 
 //输出原料信息到终端
 void print_coffee_menu(coffee_menu &menu) {
-  print_line();
   std::cout << "咖啡名：" << menu.name << std::endl;
   std::cout << "咖啡基底："<< (menu.type?"意式浓缩":"美式滴滤") << std::endl;
   std::cout << "咖啡量：" << menu.amount << std::endl;
@@ -492,15 +502,6 @@ void print_coffee_additives_files(std::fstream &ingredientsFile, coffee_additive
   print_line(ingredientsFile);
 }
 
-//输出原料信息到文件
-void print_machine_ingredients_file() {
-  std::fstream ingredientsFile;
-  print_line(ingredientsFile);
-  ingredientsFile << "水量：" << machine_ingredients.water << std::endl;
-  ingredientsFile << "咖啡豆：" << machine_ingredients.coffeeBean << std::endl;
-  print_coffee_additives_files(ingredientsFile, machine_ingredients.additives);
-}
-
 coffee_menu setting_coffee_menu(coffee_menu &new_menu) {
   std::cout << "请输入基底咖啡的类型。" << std::endl << "注意：0为美式滴滤，1为意式浓缩。" << std::endl;
   new_menu.type = (input_int_value() == 1) ? true : false;
@@ -538,8 +539,41 @@ void add_custom_order() {
     flag = input_bool();
   }
   while (!flag);
-  completed_menus.push_back(custom_menu);
-  brew_coffee(custom_menu);
+  if(brew_coffee(custom_menu)){
+    completed_menus.push_back(custom_menu);
+    std::cout << "订单完成！请取走咖啡。" << std::endl;
+    coffee_count++;
+  }else{
+    std::cout << "订单制作失败！缺少材料。" << std::endl;
+  }
+
+}
+
+void add_preset_order() {
+  int num = 1;
+  std::string menu_name;
+  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+    std::cout << num << '.' << i->name << std::endl;
+    num++;
+  }
+  bool flag;
+  do {
+    std::cout << "请输入您想要购买的菜单。" << std::endl;
+    std::cout << "注意：不能输入编号！！！" << std::endl;
+    std::cin >> menu_name;
+    std::cout << "您确定使用这个菜单了吗？" << std::endl;
+    flag = input_bool();
+  }
+  while (!flag);
+  coffee_menu order_menu = find_menu(menu_name);
+  order_menu.name = order_menu.name + time_string_now();
+  if(brew_coffee(order_menu)){
+    completed_menus.push_back(order_menu);
+    std::cout << "订单完成！请取走饮品。" << std::endl;
+    coffee_count++;
+  }else{
+    std::cout << "订单制作失败！缺少材料。" << std::endl;
+  }
 }
 
 #endif /* INCLUDE_FUNCTIONS_H_ */

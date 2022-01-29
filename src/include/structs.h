@@ -374,7 +374,7 @@ struct coffee_menu {
 
 // machine_menus为咖啡机的预设菜单，completed_menus为咖啡机制作完成的菜单表。
 // 两个最后都需要打印出来
-std::list<coffee_menu> machine_menus,completed_menus;
+std::list<coffee_menu> machine_menus, completed_menus;
 
 //
 #endif /* INCLUDE_STRUCTS_H_ */

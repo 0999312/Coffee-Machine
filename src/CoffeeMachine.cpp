@@ -19,10 +19,7 @@ int main() {
   if (!read_ingredients()) {
     std::cout << "检测到原料文件异常，进行初始化工作。" << std::endl;
     press_any_button();
-    std::fstream ingredientsFile;
-    ingredientsFile.open("ingredients.txt", std::ios::out | std::ios::trunc);
     create_new_ingredients();
-    ingredientsFile.close();
   }
   if (!read_machine_menus()) {
     std::cout << "检测到预设菜单异常！" << std::endl;
@@ -34,9 +31,9 @@ int main() {
    press_any_button();
    }
    */
-  print_machine_ingredients_file();
 
   // 主菜单
   main_menu();
+
   return EXIT_SUCCESS;
 }

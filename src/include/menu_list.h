@@ -19,7 +19,9 @@ void add_order() {
       break;
     switch (button) {
 
-//       case 0 : break;
+      case 0:
+	add_preset_order();
+	break;
       case 1:
 	add_custom_order();
 	break;
@@ -44,13 +46,16 @@ void print_preset_menu() {
 
 void delete_drink_menu() {
   std::string menu_name;
-  bool flag = false, has_menu = false;
+  bool flag = false;
+  int num;
   do {
+    num = 1;
     for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
-      print_line();
-      print_coffee_menu(*i);
+      std::cout << num << '.' << i->name << std::endl;
+      num++;
     }
-    std::cout << "请输入您想要移除的菜单。" << std::endl;
+    std::cout << "请输入您想要移除的菜单名称。" << std::endl;
+    std::cout << "注意：不能输入编号！！！" << std::endl;
     std::cin >> menu_name;
     delete_menu(menu_name);
     std::cout << "您还需要继续删除其他菜单吗？" << std::endl;
@@ -60,8 +65,7 @@ void delete_drink_menu() {
 }
 
 //添加其他原料子菜单
-coffee_additives add_other_ingredient() {
-  coffee_additives new_additives;
+void add_other_ingredient() {
   int button = 10;
   while (true) {
     system_status();
@@ -75,19 +79,19 @@ coffee_additives add_other_ingredient() {
       break;
     switch (button) {
       case 0:
-	input_milk(new_additives);
+	input_milk(machine_ingredients.additives);
 	break;
       case 1:
-	input_syrup(new_additives);
+	input_syrup(machine_ingredients.additives);
 	break;
       case 2:
-	input_sweeter(new_additives);
+	input_sweeter(machine_ingredients.additives);
 	break;
       case 3:
-	input_alcohol(new_additives);
+	input_alcohol(machine_ingredients.additives);
 	break;
       case 4:
-	input_other_ingredient(new_additives);
+	input_other_ingredient(machine_ingredients.additives);
 	break;
       default:
 	std::printf("输入错误，请重新输入：\n");
@@ -95,7 +99,6 @@ coffee_additives add_other_ingredient() {
     }
     press_any_button_1();
   }
-  return new_additives;
 }
 
 //------------------------------------------------------------------------
@@ -126,7 +129,7 @@ void add_ingredient() {
 	input_value(machine_ingredients.coffeeBean);
 	break;
       case 2:
-	machine_ingredients.additives = add_other_ingredient();
+	add_other_ingredient();
 	break;
       default:
 	std::printf("输入错误，请重新输入：\n");
@@ -138,7 +141,6 @@ void add_ingredient() {
 
 //删除原料
 void delete_ingredient() {
-  coffee_additives name;
   int button = 10;
   while (true) {
     system_status();
@@ -150,19 +152,19 @@ void delete_ingredient() {
       break;
     switch (button) {
       case 0:
-	delete_milk(name);
+	delete_milk(machine_ingredients.additives);
 	break;
       case 1:
-	delete_syrup(name);
+	delete_syrup(machine_ingredients.additives);
 	break;
       case 2:
-	delete_sweeter(name);
+	delete_sweeter(machine_ingredients.additives);
 	break;
       case 3:
-	delete_alcohol(name);
+	delete_alcohol(machine_ingredients.additives);
 	break;
       case 4:
-	delete_other_ingredient(name);
+	delete_other_ingredient(machine_ingredients.additives);
 	break;
       default:
 	std::printf("输入错误，请重新输入：\n");
