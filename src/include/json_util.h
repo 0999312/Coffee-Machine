@@ -76,6 +76,16 @@ bool read_additives_from_json(rapidjson::Value &object, coffee_additives &adds) 
   return true;
 }
 
+bool read_menu_from_json(rapidjson::Value &object, coffee_menu &menu) {
+  if (!object.IsObject())
+    return false;
+  std::string coffee_type = object["coffee_type"].GetString();
+  menu.type = (coffee_type == "espresso");
+  menu.amount = object["amount"].GetInt();
+  read_additives_from_json(object["coffee_additives"], menu.additives);
+  return true;
+}
+
 std::string gen_ingredient_string() {
   rapidjson::StringBuffer s;
   rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(s);
@@ -89,27 +99,66 @@ std::string gen_ingredient_string() {
   return s.GetString();
 }
 
+std::string gen_machine_menu_string() {
+  rapidjson::StringBuffer s;
+  rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(s);
+  writer.StartObject();
+  coffee_menu menu;
+  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
+    menu = *i;
+    writer.Key(menu.name.c_str());
+    writer.StartObject();
+    writer.Key("coffee_type");
+    writer.String((menu.type?"espresso":"americano"));
+    writer.Key("amount");
+    writer.Int(menu.amount);
+    gen_additives_to_writer(writer, menu.additives);
+    writer.EndObject();
+  }
+  writer.EndObject();
+  return s.GetString();
+}
+
+bool read_machine_menu(std::ifstream &file) {
+  rapidjson::Document doc;
+  rapidjson::IStreamWrapper isw { file };
+  doc.ParseStream(isw);
+  if (doc.HasParseError()) {
+    return false;
+  }
+  coffee_menu menu;
+  rapidjson::Value::ConstMemberIterator iter;
+  for(iter = doc.MemberBegin();iter!=doc.MemberEnd();iter++){
+    if(iter->value.IsObject()){
+      menu.name = iter->name.GetString();
+      read_menu_from_json(doc[iter->name], menu);
+      machine_menus.push_back(menu);
+    }
+    else{
+      std::string name = iter->name.GetString();
+      continue;
+    }
+  }
+  return true;
+}
+
 bool read_ingredient_json(std::ifstream &file) {
   rapidjson::Document doc;
   rapidjson::IStreamWrapper isw { file };
   doc.ParseStream(isw);
   if (doc.HasParseError()) {
-    std::cout << "JSON Error  : " << doc.GetParseError() << std::endl
-	     << "Offset : " << doc.GetErrorOffset() << std::endl;
     return false;
   }
   rapidjson::Value::ConstMemberIterator iter = doc.FindMember("water");
   if(iter!=doc.MemberEnd()&&iter->value.IsInt())
     machine_ingredients.water = iter->value.GetInt();
   else{
-    std::cout << "JSON Error in reading water;";
     return false;
   }
   iter = doc.FindMember("coffee_bean");
   if(iter!=doc.MemberEnd()&&iter->value.IsInt())
     machine_ingredients.coffeeBean = doc["coffee_bean"].GetInt();
   else{
-    std::cout << "JSON Error in reading coffee bean;";
     return false;
   }
   read_additives_from_json(doc["coffee_additives"], machine_ingredients.additives);

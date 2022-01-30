@@ -285,6 +285,36 @@ struct coffee_additives {
       return false;
     }
 
+    bool use_additives(coffee_additives& additives) {
+      std::map<std::string, int>::iterator it; //定义map迭代器，用于遍历map。
+      for (it = additives.milk.begin();
+          it != additives.milk.end(); it++) {
+        if(!use_milk(it->first, it->second))
+          return false;
+      }
+      for (it = additives.syrup.begin();
+          it != additives.syrup.end(); it++) {
+        if(!use_syrup(it->first, it->second))
+          return false;
+      }
+      for (it = additives.sweeter.begin();
+          it != additives.sweeter.end(); it++) {
+        if(!use_sweeter(it->first, it->second))
+          return false;
+      }
+      for (it = additives.alcohol.begin();
+          it != additives.alcohol.end(); it++) {
+        if(!use_alcohol(it->first, it->second))
+          return false;
+      }
+      for (it = additives.others.begin();
+          it != additives.others.end(); it++) {
+        if(!use_other_ingredient(it->first, it->second))
+          return false;
+      }
+      return true;
+    }
+
     bool delete_ingredient(std::string name) {
       if (delete_milk(name))
 	return true;
@@ -309,6 +339,23 @@ struct coffee_ingredients {
     int coffeeBean;
     // 添加剂
     coffee_additives additives;
+
+    bool use_water(int count) {
+      if (water >= count) {
+	water -= count;
+	return true;
+      }
+      return false;
+    }
+
+    bool use_coffee_bean(int count) {
+      if (coffeeBean >= count) {
+	coffeeBean -= count;
+	return true;
+      }
+      return false;
+    }
+
 } machine_ingredients;
 
 // 咖啡菜单表，当然是按一杯咖啡的量进行计算。
@@ -324,6 +371,10 @@ struct coffee_menu {
     // 添加剂
     coffee_additives additives;
 };
+
+// machine_menus为咖啡机的预设菜单，completed_menus为咖啡机制作完成的菜单表。
+// 两个最后都需要打印出来
+std::list<coffee_menu> machine_menus, completed_menus;
 
 //
 #endif /* INCLUDE_STRUCTS_H_ */
