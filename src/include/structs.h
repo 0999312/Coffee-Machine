@@ -26,6 +26,14 @@ struct coffee_additives {
     // 其他添加剂
     std::map<std::string, int> others;
 
+    bool operator ==(const coffee_additives& other){
+      return this->milk == other.milk
+	  && this->syrup == other.syrup
+	  && this->sweeter == other.sweeter
+	  && this->alcohol == other.alcohol
+	  && this->others == other.others;
+    }
+
     /*
      * 直接设定原料的方法以set开头，添加原料的方法以add开头
      * 获取原料的方法以get开头，使用（减少）原料的方法以use开头
@@ -370,6 +378,14 @@ struct coffee_menu {
     int amount;
     // 添加剂
     coffee_additives additives;
+
+    bool operator ==(const coffee_menu& other){
+      return this->name == other.name
+	  && this->type == other.type
+	  && this->amount == other.amount
+	  && this->additives == other.additives;
+    }
+
 };
 
 // machine_menus为咖啡机的预设菜单，completed_menus为咖啡机制作完成的菜单表。

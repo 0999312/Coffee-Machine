@@ -1,4 +1,4 @@
-    #ifndef INCLUDE_MAINMENU_H_
+#ifndef INCLUDE_MAINMENU_H_
 #define INCLUDE_MAINMENU_H_
 /*
  * 头文件保护, IDE自带。
@@ -20,7 +20,7 @@ void main_menu() {
     std::printf("水剩余量：%d\n", machine_ingredients.water);
     std::cout<<"本次运行已制作的咖啡数量："<<coffee_count<<" 杯。"<<std::endl;
     print_line();
-    std::printf("[0] 原料管理 [1] 菜单管理 [2] 新增订单 [3] 打印菜单 [4] 初始化咖啡机 [-1] 结束程序\n");
+    std::printf("[0] 原料管理 [1] 菜单管理 [2] 新增订单 [3]统计功能 [4] 初始化咖啡机 [-1] 结束程序\n");
     std::cin >> button;
     if (button == -1){
       std::ofstream menusFile;
@@ -45,11 +45,11 @@ void main_menu() {
 	add_order();
 	break;
       case 3:
-	print_preset_menu();
+	stat_menu();
 	break;
       case 4:
-      create_new_ingredients();
-      break;
+	create_new_ingredients();
+	break;
       default:
 	std::printf("输入错误,请重新输入：\n");
 	break;
