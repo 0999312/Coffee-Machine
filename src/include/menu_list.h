@@ -44,6 +44,43 @@ void print_preset_menu() {
   press_any_button_1();
 }
 
+//打印完成订单
+void print_completed_menu() {
+  system_status();
+  for (auto i = completed_menus.begin(); i != completed_menus.end(); i++) {
+    print_line();
+    print_coffee_menu(*i);
+  }
+  press_any_button_1();
+}
+
+//新增订单
+void stat_menu() {
+  int button = 10;
+  while (true) {
+    system_status();
+    std::printf("------------------------统计功能------------------------\n");
+    std::printf("[0] 打印预设菜单 [1] 打印完成订单 [2]订单统计 [9] 返回主界面\n");
+    std::cin >> button;
+    if (button == 9)
+      break;
+    switch (button) {
+
+      case 0:
+	print_preset_menu();
+	break;
+      case 1:
+	print_completed_menu();
+	break;
+
+      default:
+	std::printf("未完成，请返回上一级\n");
+	press_any_button_1();
+    }
+  }
+}
+
+
 void delete_drink_menu() {
   std::string menu_name;
   bool flag = false;
@@ -55,9 +92,13 @@ void delete_drink_menu() {
       num++;
     }
     std::cout << "请输入您想要移除的菜单名称。" << std::endl;
-    std::cout << "注意：不能输入编号！！！" << std::endl;
+    std::cout << "注意：不是输入编号！！！" << std::endl;
     std::cin >> menu_name;
-    delete_menu(menu_name);
+    if(delete_menu(menu_name))
+      std::cout << "菜单 "+menu_name+" 移除成功。" << std::endl;
+    else
+      std::cout << "菜单 "+menu_name+" 移除失败，不存在该菜单。" << std::endl;
+
     std::cout << "您还需要继续删除其他菜单吗？" << std::endl;
     flag = input_bool();
   }

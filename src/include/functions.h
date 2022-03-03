@@ -557,14 +557,18 @@ void add_preset_order() {
   }
   bool flag;
   do {
-    std::cout << "请输入您想要购买的菜单。" << std::endl;
-    std::cout << "注意：不能输入编号！！！" << std::endl;
+    std::cout << "请输入您想要购买的菜单名。" << std::endl;
+    std::cout << "注意：不是输入编号！！！" << std::endl;
     std::cin >> menu_name;
     std::cout << "您确定使用这个菜单了吗？" << std::endl;
     flag = input_bool();
   }
   while (!flag);
   coffee_menu order_menu = find_menu(menu_name);
+  if(order_menu == *machine_menus.end()){
+    std::cout << "订单制作失败！不存在该菜单。" << std::endl;
+    return ;
+  }
   order_menu.name = order_menu.name + time_string_now();
   if(brew_coffee(order_menu)){
     completed_menus.push_back(order_menu);
@@ -574,5 +578,7 @@ void add_preset_order() {
     std::cout << "订单制作失败！缺少材料。" << std::endl;
   }
 }
+
+
 
 #endif /* INCLUDE_FUNCTIONS_H_ */
