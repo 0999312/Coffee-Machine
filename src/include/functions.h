@@ -528,6 +528,36 @@ void add_new_coffee_menu() {
   machine_menus.push_back(new_menu);
 }
 
+void finish_coffee_order(coffee_menu &order){
+  coffee_count++;
+  if(order.type)
+    machine_stat.espresso++;
+  else
+    machine_stat.drip++;
+
+  std::map<std::string, int>::iterator it; //定义map迭代器，用于遍历map。
+  for (it = order.additives.milk.begin();
+      it != order.additives.milk.end(); it++) {
+    machine_stat.additives.add_milk(it->first, it->second);
+  }
+  for (it = order.additives.syrup.begin();
+      it != order.additives.syrup.end(); it++) {
+    machine_stat.additives.add_syrup(it->first, it->second);
+  }
+  for (it = order.additives.sweeter.begin();
+      it != order.additives.sweeter.end(); it++) {
+    machine_stat.additives.add_sweeter(it->first, it->second);
+  }
+  for (it = order.additives.alcohol.begin();
+      it != order.additives.alcohol.end(); it++) {
+    machine_stat.additives.add_alcohol(it->first, it->second);
+  }
+  for (it = order.additives.others.begin();
+      it != order.additives.others.end(); it++) {
+    machine_stat.additives.add_other_ingredient(it->first, it->second);
+  }
+}
+
 void add_custom_order() {
   coffee_menu custom_menu;
   bool flag;
@@ -541,7 +571,8 @@ void add_custom_order() {
   if(brew_coffee(custom_menu)){
     completed_menus.push_back(custom_menu);
     std::cout << "订单完成！请取走咖啡。" << std::endl;
-    coffee_count++;
+    finish_coffee_order(custom_menu);
+
   }else{
     std::cout << "订单制作失败！缺少材料。" << std::endl;
   }
@@ -573,7 +604,7 @@ void add_preset_order() {
   if(brew_coffee(order_menu)){
     completed_menus.push_back(order_menu);
     std::cout << "订单完成！请取走饮品。" << std::endl;
-    coffee_count++;
+    finish_coffee_order(order_menu);
   }else{
     std::cout << "订单制作失败！缺少材料。" << std::endl;
   }

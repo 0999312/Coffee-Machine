@@ -8,6 +8,7 @@
 #include <string> // C++ 字符串库
 #include <map> // C++ Map数据类型库
 #include <utility> // C++ 通用工具头文件，pair定义于此
+#include <algorithm> // C++算法库
 
 // C++里可以直接在结构体里定义函数。
 // 不用class的原因是“保护新人”，严格来说这里可以直接使用class并且推荐使用class。
@@ -387,6 +388,18 @@ struct coffee_menu {
     }
 
 };
+
+
+
+struct coffee_machine_stat {
+    // 美式滴滤的杯数
+    int drip = 0;
+    // 意式浓缩的杯数
+    int espresso = 0;
+    // 添加剂
+    coffee_additives additives;
+
+}machine_stat;
 
 // machine_menus为咖啡机的预设菜单，completed_menus为咖啡机制作完成的菜单表。
 // 两个最后都需要打印出来
