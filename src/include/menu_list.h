@@ -120,6 +120,13 @@ void print_completed_menu() {
   press_any_button_1();
 }
 
+//打印完成订单
+void print_stats() {
+  system_status();
+  print_machine_stats();
+  press_any_button_1();
+}
+
 //新增订单
 void stat_menu() {
   int button = 10;
@@ -137,6 +144,9 @@ void stat_menu() {
 	break;
       case 1:
 	print_completed_menu();
+	break;
+      case 2:
+	print_stats();
 	break;
 
       default:
