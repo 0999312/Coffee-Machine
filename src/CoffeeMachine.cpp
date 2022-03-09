@@ -4,7 +4,7 @@
 #include <fstream> //C++ 文件输入输出流
 #include "include/structs.h" // 自己的结构体头文件
 #include "include/functions.h" // 自己的函数头文件
-#include "include/main_menu.h" // 主菜单头文件
+#include "include/menu_list.h" // 自己的菜单头文件
 #ifdef _WIN32
 #include <windows.h>
 #endif

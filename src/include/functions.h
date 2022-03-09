@@ -69,7 +69,8 @@ void press_any_button_1() {
 
 std::string time_string_now() {
   std::time_t now = std::time(nullptr);
-  std::tm *ltm = std::localtime(&now);\
+  std::tm *ltm = std::localtime(&now);
+
   return std::to_string(ltm->tm_year + 1900) + '_'
       + std::to_string(ltm->tm_mon + 1) + '_' + std::to_string(ltm->tm_mday)
       + '_' + std::to_string(ltm->tm_hour) + '_' + std::to_string(ltm->tm_min)
@@ -132,7 +133,7 @@ void input_milk(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的奶制品名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_milk(name, amount);
     std::cout << "您还需要继续添加奶制品吗？" << std::endl;
@@ -149,7 +150,7 @@ void input_syrup(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的糖浆名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_syrup(name, amount);
     std::cout << "您还需要继续添加糖浆吗？" << std::endl;
@@ -166,7 +167,7 @@ void input_sweeter(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的甜味剂名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_sweeter(name, amount);
     std::cout << "您还需要继续添加甜味剂吗？" << std::endl;
@@ -183,7 +184,7 @@ void input_alcohol(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的酒类名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入当前库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_alcohol(name, amount);
     std::cout << "您还需要继续添加酒吗？" << std::endl;
@@ -200,7 +201,7 @@ void input_other_ingredient(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的其他添加剂。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_other_ingredient(name, amount);
     std::cout << "您还需要继续添加其他添加剂吗？" << std::endl;
@@ -216,7 +217,7 @@ void delete_milk(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的奶制品名称。" << std::endl;
     std::cin >> name;
-    if(!new_additives.delete_milk(name))
+    if (!new_additives.delete_milk(name))
       std::cout << "移除失败，未发现该奶制品。" << std::endl;
     std::cout << "您还需要继续删除其他奶制品吗？" << std::endl;
     flag = input_bool();
@@ -225,8 +226,8 @@ void delete_milk(coffee_additives &new_additives) {
 }
 
 bool delete_menu(std::string &menu_name) {
-  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
-    if(i->name == menu_name){
+  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+    if (i->name == menu_name) {
       machine_menus.erase(i);
       return true;
     }
@@ -235,10 +236,19 @@ bool delete_menu(std::string &menu_name) {
 }
 
 coffee_menu& find_menu(std::string &menu_name) {
-  for(auto i = machine_menus.begin();i!=machine_menus.end();i++){
-    if(i->name == menu_name){
+  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+    if (i->name == menu_name) {
       return *i;
     }
+  }
+  std::string num = menu_name;
+  std::stringstream ss(num);
+  unsigned int n;
+  ss >> n;
+  if(n<=machine_menus.size()){
+    auto menu = machine_menus.begin();
+    std::advance(menu, (n-1) );
+    return *(menu);
   }
   return *machine_menus.end();
 }
@@ -250,7 +260,7 @@ void delete_syrup(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的糖浆名称。" << std::endl;
     std::cin >> name;
-    if(!new_additives.delete_syrup(name))
+    if (!new_additives.delete_syrup(name))
       std::cout << "移除失败，未发现该糖浆。" << std::endl;
     std::cout << "您还需要继续删除其他糖浆吗？" << std::endl;
     flag = input_bool();
@@ -265,7 +275,7 @@ void delete_sweeter(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的甜味剂名称。" << std::endl;
     std::cin >> name;
-    if(!new_additives.delete_sweeter(name))
+    if (!new_additives.delete_sweeter(name))
       std::cout << "移除失败，未发现该甜味剂。" << std::endl;
     std::cout << "您还需要继续删除其他甜味剂吗？" << std::endl;
     flag = input_bool();
@@ -280,7 +290,7 @@ void delete_alcohol(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的酒类名称。" << std::endl;
     std::cin >> name;
-    if(!new_additives.delete_alcohol(name))
+    if (!new_additives.delete_alcohol(name))
       std::cout << "移除失败，未发现该酒类。" << std::endl;
     std::cout << "您还需要继续删除其他酒类吗？" << std::endl;
     flag = input_bool();
@@ -295,7 +305,7 @@ void delete_other_ingredient(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要删除的添加剂名称。" << std::endl;
     std::cin >> name;
-    if(!new_additives.delete_other_ingredient(name))
+    if (!new_additives.delete_other_ingredient(name))
       std::cout << "移除失败，未发现该添加剂。" << std::endl;
     std::cout << "您还需要继续删除其他添加剂吗？" << std::endl;
     flag = input_bool();
@@ -400,50 +410,48 @@ bool read_machine_menus() {
   return flag;
 }
 
-void print_coffee_additives(coffee_additives& additives) {
+void print_coffee_additives(coffee_additives &additives) {
   std::map<std::string, int>::iterator it;
   print_line();
   std::cout << "咖啡添加剂：" << std::endl;
   std::cout << "\t奶制品：" << std::endl;
-  for (it = additives.milk.begin();
-      it != additives.milk.end(); it++) {
+  for (it = additives.milk.begin(); it != additives.milk.end(); it++) {
     std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
   }
   std::cout << "\t糖浆：" << std::endl;
-  for (it = additives.syrup.begin();
-      it != additives.syrup.end(); it++) {
+  for (it = additives.syrup.begin(); it != additives.syrup.end(); it++) {
     std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
   }
   std::cout << "\t甜味剂：" << std::endl;
-  for (it = additives.sweeter.begin();
-      it != additives.sweeter.end(); it++) {
+  for (it = additives.sweeter.begin(); it != additives.sweeter.end(); it++) {
     std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
   }
   std::cout << "\t酒类：" << std::endl;
-  for (it = additives.alcohol.begin();
-      it != additives.alcohol.end(); it++) {
+  for (it = additives.alcohol.begin(); it != additives.alcohol.end(); it++) {
     std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
   }
   std::cout << "\t其他添加剂：" << std::endl;
-  for (it = additives.others.begin();
-      it != additives.others.end(); it++) {
+  for (it = additives.others.begin(); it != additives.others.end(); it++) {
     std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
   }
   print_line();
 }
 
 //制作咖啡，消耗原料。
-bool brew_coffee(coffee_menu &menu){
+bool brew_coffee(coffee_menu &menu) {
   bool flag_base, flag_additives;
-  if(menu.type){
-    flag_base = machine_ingredients.use_water(menu.amount * 40) && machine_ingredients.use_coffee_bean(menu.amount * 40);
-  }else{
-    flag_base = machine_ingredients.use_water(menu.amount * 15) && machine_ingredients.use_coffee_bean(menu.amount);
+  if (menu.type) {
+    flag_base = machine_ingredients.use_water(menu.amount * 40)
+	&& machine_ingredients.use_coffee_bean(menu.amount * 40);
   }
-  if(!flag_base)
+  else {
+    flag_base = machine_ingredients.use_water(menu.amount * 15)
+	&& machine_ingredients.use_coffee_bean(menu.amount);
+  }
+  if (!flag_base)
     std::cout << "制作咖啡基底时出现材料短缺错误！" << std::endl;
   flag_additives = machine_ingredients.additives.use_additives(menu.additives);
-  if(!flag_base)
+  if (!flag_base)
     std::cout << "添加添加剂时出现材料短缺错误！" << std::endl;
   return flag_base && flag_additives;
 }
@@ -459,42 +467,47 @@ void print_machine_ingredients() {
 //输出原料信息到终端
 void print_coffee_menu(coffee_menu &menu) {
   std::cout << "咖啡名：" << menu.name << std::endl;
-  std::cout << "咖啡基底："<< (menu.type?"意式浓缩":"美式滴滤") << std::endl;
+  std::cout << "咖啡基底：" << (menu.type ? "意式浓缩" : "美式滴滤") << std::endl;
   std::cout << "咖啡量：" << menu.amount << std::endl;
   print_coffee_additives(menu.additives);
 }
 
-void print_coffee_additives_files(std::fstream &ingredientsFile, coffee_additives& additives) {
+//输出统计到终端
+void print_machine_stats() {
+  print_line();
+  std::cout << "使用咖啡基底的情况：" << std::endl;
+  std::cout << "\t美式滴滤基底：" << machine_stat.drip << std::endl;
+  std::cout << "\t意式浓缩基底：" << machine_stat.espresso << std::endl;
+  print_coffee_additives(machine_stat.additives);
+}
+
+void print_coffee_additives_files(std::fstream &ingredientsFile,
+				  coffee_additives &additives) {
   std::map<std::string, int>::iterator it; //定义map迭代器，用于遍历map。
   print_line(ingredientsFile);
   ingredientsFile << "咖啡添加剂：" << std::endl;
   ingredientsFile << "\t奶制品：" << std::endl;
-  for (it = additives.milk.begin();
-      it != additives.milk.end(); it++) {
+  for (it = additives.milk.begin(); it != additives.milk.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t糖浆：" << std::endl;
-  for (it = additives.syrup.begin();
-      it != additives.syrup.end(); it++) {
+  for (it = additives.syrup.begin(); it != additives.syrup.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t甜味剂：" << std::endl;
-  for (it = additives.sweeter.begin();
-      it != additives.sweeter.end(); it++) {
+  for (it = additives.sweeter.begin(); it != additives.sweeter.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t酒类：" << std::endl;
-  for (it = additives.alcohol.begin();
-      it != additives.alcohol.end(); it++) {
+  for (it = additives.alcohol.begin(); it != additives.alcohol.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
   ingredientsFile << "\t其他添加剂：" << std::endl;
-  for (it = additives.others.begin();
-      it != additives.others.end(); it++) {
+  for (it = additives.others.begin(); it != additives.others.end(); it++) {
     ingredientsFile << "\t\t名称：" << it->first << "，含量：" << it->second
 	<< std::endl;
   }
@@ -528,20 +541,20 @@ void add_new_coffee_menu() {
   machine_menus.push_back(new_menu);
 }
 
-void finish_coffee_order(coffee_menu &order){
+void finish_coffee_order(coffee_menu &order) {
   coffee_count++;
-  if(order.type)
+  if (order.type)
     machine_stat.espresso++;
   else
     machine_stat.drip++;
 
   std::map<std::string, int>::iterator it; //定义map迭代器，用于遍历map。
-  for (it = order.additives.milk.begin();
-      it != order.additives.milk.end(); it++) {
+  for (it = order.additives.milk.begin(); it != order.additives.milk.end();
+      it++) {
     machine_stat.additives.add_milk(it->first, it->second);
   }
-  for (it = order.additives.syrup.begin();
-      it != order.additives.syrup.end(); it++) {
+  for (it = order.additives.syrup.begin(); it != order.additives.syrup.end();
+      it++) {
     machine_stat.additives.add_syrup(it->first, it->second);
   }
   for (it = order.additives.sweeter.begin();
@@ -552,8 +565,8 @@ void finish_coffee_order(coffee_menu &order){
       it != order.additives.alcohol.end(); it++) {
     machine_stat.additives.add_alcohol(it->first, it->second);
   }
-  for (it = order.additives.others.begin();
-      it != order.additives.others.end(); it++) {
+  for (it = order.additives.others.begin(); it != order.additives.others.end();
+      it++) {
     machine_stat.additives.add_other_ingredient(it->first, it->second);
   }
 }
@@ -568,12 +581,13 @@ void add_custom_order() {
     flag = input_bool();
   }
   while (!flag);
-  if(brew_coffee(custom_menu)){
+  if (brew_coffee(custom_menu)) {
     completed_menus.push_back(custom_menu);
     std::cout << "订单完成！请取走咖啡。" << std::endl;
     finish_coffee_order(custom_menu);
 
-  }else{
+  }
+  else {
     std::cout << "订单制作失败！缺少材料。" << std::endl;
   }
 
@@ -589,27 +603,25 @@ void add_preset_order() {
   bool flag;
   do {
     std::cout << "请输入您想要购买的菜单名。" << std::endl;
-    std::cout << "注意：不是输入编号！！！" << std::endl;
     std::cin >> menu_name;
     std::cout << "您确定使用这个菜单了吗？" << std::endl;
     flag = input_bool();
   }
   while (!flag);
   coffee_menu order_menu = find_menu(menu_name);
-  if(order_menu == *machine_menus.end()){
+  if (order_menu == *machine_menus.end()) {
     std::cout << "订单制作失败！不存在该菜单。" << std::endl;
-    return ;
+    return;
   }
-  order_menu.name = order_menu.name + time_string_now();
-  if(brew_coffee(order_menu)){
+  order_menu.name = order_menu.name +':'+ time_string_now();
+  if (brew_coffee(order_menu)) {
     completed_menus.push_back(order_menu);
     std::cout << "订单完成！请取走饮品。" << std::endl;
     finish_coffee_order(order_menu);
-  }else{
+  }
+  else {
     std::cout << "订单制作失败！缺少材料。" << std::endl;
   }
 }
-
-
 
 #endif /* INCLUDE_FUNCTIONS_H_ */
