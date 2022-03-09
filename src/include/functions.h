@@ -241,6 +241,15 @@ coffee_menu& find_menu(std::string &menu_name) {
       return *i;
     }
   }
+  std::string num = menu_name;
+  std::stringstream ss(num);
+  unsigned int n;
+  ss >> n;
+  if(n<=machine_menus.size()){
+    auto menu = machine_menus.begin();
+    std::advance(menu, (n-1) );
+    return *(menu);
+  }
   return *machine_menus.end();
 }
 
@@ -594,7 +603,6 @@ void add_preset_order() {
   bool flag;
   do {
     std::cout << "请输入您想要购买的菜单名。" << std::endl;
-    std::cout << "注意：不是输入编号！！！" << std::endl;
     std::cin >> menu_name;
     std::cout << "您确定使用这个菜单了吗？" << std::endl;
     flag = input_bool();
@@ -605,7 +613,7 @@ void add_preset_order() {
     std::cout << "订单制作失败！不存在该菜单。" << std::endl;
     return;
   }
-  order_menu.name = order_menu.name + time_string_now();
+  order_menu.name = order_menu.name +':'+ time_string_now();
   if (brew_coffee(order_menu)) {
     completed_menus.push_back(order_menu);
     std::cout << "订单完成！请取走饮品。" << std::endl;

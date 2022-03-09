@@ -133,7 +133,7 @@ void stat_menu() {
   while (true) {
     system_status();
     std::printf("------------------------统计功能------------------------\n");
-    std::printf("[0] 打印预设菜单 [1] 打印完成订单 [2]订单统计 [9] 返回主界面\n");
+    std::printf("[0] 打印预设菜单 [1] 打印完成订单 [2]信息统计 [9] 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
