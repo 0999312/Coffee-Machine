@@ -133,7 +133,7 @@ void input_milk(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的奶制品名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_milk(name, amount);
     std::cout << "您还需要继续添加奶制品吗？" << std::endl;
@@ -167,7 +167,7 @@ void input_sweeter(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的甜味剂名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_sweeter(name, amount);
     std::cout << "您还需要继续添加甜味剂吗？" << std::endl;
@@ -184,7 +184,7 @@ void input_alcohol(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的酒类名称。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入当前库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_alcohol(name, amount);
     std::cout << "您还需要继续添加酒吗？" << std::endl;
@@ -201,7 +201,7 @@ void input_other_ingredient(coffee_additives &new_additives) {
   do {
     std::cout << "请输入您想要添加的其他添加剂。" << std::endl;
     std::cin >> name;
-    std::cout << "请输入您想要添加的库存量。" << std::endl;
+    std::cout << "请输入您想要添加的数量。" << std::endl;
     input_value(amount);
     new_additives.add_other_ingredient(name, amount);
     std::cout << "您还需要继续添加其他添加剂吗？" << std::endl;
