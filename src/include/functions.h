@@ -40,12 +40,14 @@ void print_line(std::fstream &outFile) {
  * 某种意义来说好像本来就是很不安全的写法？
  */
 void clear_screen() {
+/*
 #ifdef _WIN32
   std::system("cls");
 #else
     // Assume POSIX
     std::system("clear");
   #endif
+*/
 }
 
 void press_any_button() {
