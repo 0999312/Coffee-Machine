@@ -23,7 +23,7 @@ void main_menu() {
     std::printf("水剩余量：%d\n", machine_ingredients.water);
     std::cout<<"本次运行已制作的咖啡数量："<<coffee_count<<" 杯。"<<std::endl;
     print_line();
-    std::printf("0.原料管理\n1.菜单管理\n2.新增订单\n3.统计功能\n4.初始化咖啡机\n-1.结束程序\n");
+    std::printf("    [ 0] - 原料管理\n    [ 1] - 菜单管理\n    [ 2] - 新增订单\n    [ 3] - 统计功能\n    [ 4] - 初始化咖啡机\n    [-1] - 结束程序\n");
     std::cin >> button;
     if (button == -1){
       std::ofstream menusFile;
@@ -72,7 +72,7 @@ void add_order() {
   while (true) {
     system_status();
     std::printf("-------------------新增订单-------------------\n");
-    std::printf("0.选择菜单\n1.自定义菜单\n9.返回主界面\n");
+    std::printf("    [ 0] - 选择菜单\n    [ 1] - 自定义菜单\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
@@ -124,7 +124,7 @@ void stat_menu() {
   while (true) {
     system_status();
     std::printf("------------------------统计功能------------------------\n");
-    std::printf("0.打印预设菜单\n1.打印完成订单\n2.信息统计\n9.返回主界面\n");
+    std::printf("    [ 0] - 打印预设菜单\n    [ 1] - 打印完成订单\n    [ 2] - 信息统计\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
@@ -175,7 +175,7 @@ void add_other_ingredient() {
   while (true) {
     system_status();
     std::printf("-------------------其他原料-------------------\n");
-    std::printf("0.奶制品\n1.糖浆\n2.甜味剂\n3.酒\n4.其他原料\n9.返回上一级\n");
+    std::printf("    [ 0] - 奶制品\n    [ 1] - 糖浆\n    [ 2] - 甜味剂\n    [ 3] - 酒\n    [ 4] - 其他原料\n    [ 9] - 返回上一级\n");
     std::cout << "请注意，所有的数据均按照质量计算。" << std::endl;
     std::cout << "数值对应为原料的克数，即当前有多少克原料。" << std::endl;
     print_line();
@@ -215,7 +215,7 @@ void add_ingredient() {
   while (true) {
     system_status();
     std::printf("------------------添加新原料------------------\n");
-    std::printf("0.添加水\n1.添加咖啡豆\n2.添加其他原料\n9.返回上一级\n");
+    std::printf("    [ 0] - 添加水\n    [ 1] - 添加咖啡豆\n    [ 2] - 添加其他原料\n    [ 9] - 返回上一级\n");
     std::cout << "请注意，所有的数据均按照质量计算。" << std::endl;
     std::cout << "数值对应为原料的克数，即当前有多少克原料。" << std::endl;
     print_line();
@@ -248,7 +248,7 @@ void delete_ingredient() {
   while (true) {
     system_status();
     std::printf("---------------选择删除原料类型---------------\n");
-    std::printf("0.奶制品\n1.糖浆\n2.甜味剂\n3.酒\n4.其他原料\n9.返回上一级\n");
+    std::printf("    [ 0] - 奶制品\n    [ 1] - 糖浆\n    [ 2] - 甜味剂\n    [ 3] - 酒\n    [ 4] - 其他原料\n    [ 9] - 返回上一级\n");
     print_line();
     std::cin >> button;
     if (button == 9)
@@ -286,7 +286,7 @@ void ingredient_management() {
   while (true) {
     system_status();
     std::printf("-------------------原料管理-------------------\n");
-    std::printf("0.添加原料\n1.删除原料\n2.现有原料列表\n9.返回主界面\n");
+    std::printf("    [ 0] - 添加原料\n    [ 1] - 删除原料\n    [ 2] - 现有原料列表\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
@@ -314,7 +314,7 @@ void menu_management() {
   while (true) {
     system_status();
     std::printf("-------------------菜单管理-------------------\n");
-    std::printf("0.添加新菜单\n1.删除菜单\n9.返回主界面\n");
+    std::printf("    [ 0] - 添加新菜单\n    [ 1] - 删除菜单\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
