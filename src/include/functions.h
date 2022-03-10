@@ -18,7 +18,6 @@
 #include <ctime>// C语言 时间
 #include "structs.h" // 自己的结构体头文件
 #include "json_util.h" // 自己的Json工具头文件
-
 int coffee_count = 0;
 
 //输出一个80字符的分隔线
@@ -245,7 +244,7 @@ coffee_menu& find_menu(std::string &menu_name) {
     std::advance(menu, (n-1) );
     return *(menu);
   }
-  return *machine_menus.end();
+  return null_menu;
 }
 
 //删除奶制品
@@ -616,7 +615,7 @@ void add_preset_order() {
   }
   while (!flag);
   coffee_menu order_menu = find_menu(menu_name);
-  if (order_menu == *machine_menus.end()) {
+  if (order_menu == null_menu) {
     std::cout << "订单制作失败！不存在该菜单。" << std::endl;
     return;
   }
