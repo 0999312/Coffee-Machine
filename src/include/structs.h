@@ -387,7 +387,7 @@ struct coffee_menu {
 	  && this->additives == other.additives;
     }
 
-};
+}null_menu;
 
 
 

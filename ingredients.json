@@ -1,0 +1,11 @@
+{
+    "water": 1000,
+    "coffee_bean": 1000,
+    "coffee_additives": {
+        "milk": {},
+        "syrup": {},
+        "sweeter": {},
+        "alcohol": {},
+        "others": {}
+    }
+}
