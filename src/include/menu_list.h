@@ -58,7 +58,6 @@ void main_menu() {
 	break;
     }
   }
-
 }
 
 //子菜单，直接引用即可
@@ -66,12 +65,6 @@ void main_menu() {
 
 //------------------------------------------------------------------------
 //三级子菜单
-
-//订单统计
-void order_statistics() {
-  system_status();
-  
-}
 
 //新增订单
 void add_order() {
@@ -84,14 +77,12 @@ void add_order() {
     if (button == 9)
       break;
     switch (button) {
-
       case 0:
 	add_preset_order();
 	break;
       case 1:
 	add_custom_order();
 	break;
-
       default:
 	std::printf("未完成，请返回上一级\n");
 	break;
@@ -148,14 +139,12 @@ void stat_menu() {
       case 2:
 	print_stats();
 	break;
-
       default:
 	std::printf("未完成，请返回上一级\n");
 	press_any_button_1();
     }
   }
 }
-
 
 void delete_drink_menu() {
   std::string menu_name;
@@ -167,13 +156,12 @@ void delete_drink_menu() {
       std::cout << num << '.' << i->name << std::endl;
       num++;
     }
-    std::cout << "请输入您想要移除的菜单名称。" << std::endl;
-    std::cout << "注意：不是输入编号！！！" << std::endl;
+    std::cout << "请输入您想要移除的菜单。" << std::endl;
     std::cin >> menu_name;
     if(delete_menu(menu_name))
-      std::cout << "菜单 "+menu_name+" 移除成功。" << std::endl;
+      std::cout << "菜单移除成功。" << std::endl;
     else
-      std::cout << "菜单 "+menu_name+" 移除失败，不存在该菜单。" << std::endl;
+      std::cout << "菜单移除失败，不存在该菜单。" << std::endl;
 
     std::cout << "您还需要继续删除其他菜单吗？" << std::endl;
     flag = input_bool();
@@ -220,9 +208,7 @@ void add_other_ingredient() {
 
 //------------------------------------------------------------------------
 //二级子菜单
-
 //原料资源管理子菜单
-
 //添加新原料
 void add_ingredient() {
   int button = 10;
