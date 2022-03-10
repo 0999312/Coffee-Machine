@@ -23,9 +23,9 @@ void main_menu() {
     std::printf("水剩余量：%d\n", machine_ingredients.water);
     std::cout<<"本次运行已制作的咖啡数量："<<coffee_count<<" 杯。"<<std::endl;
     print_line();
-    std::printf("0.原料管理\n1.菜单管理\n2.新增订单\n3.统计功能\n4.初始化咖啡机\n9.结束程序\n");
+    std::printf("0.原料管理\n1.菜单管理\n2.新增订单\n3.统计功能\n4.初始化咖啡机\n-1.结束程序\n");
     std::cin >> button;
-    if (button == 9){
+    if (button == -1){
       std::ofstream menusFile;
       menusFile.open("drinks_menu.json", std::ios::out | std::ios::trunc);
       menusFile << gen_machine_menu_string();
