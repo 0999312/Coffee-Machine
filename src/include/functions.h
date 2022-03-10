@@ -82,7 +82,7 @@ void system_status() {
   clear_screen();
   std::time_t now = std::time(nullptr);
   std::tm *ltm = std::localtime(&now);
-  std::printf("咖啡机模拟系统 当前版本:v1.0 当前时间:  ");
+  std::printf("咖啡机模拟系统 当前版本:v1.1 当前时间:  ");
   std::printf("%04d年%02d月%02d日  ", ltm->tm_year + 1900, ltm->tm_mon + 1,
 	      ltm->tm_mday);
   std::printf("%02d时%02d分%02d秒\n", ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
@@ -210,6 +210,44 @@ void input_other_ingredient(coffee_additives &new_additives) {
   while (flag);
 }
 
+bool delete_menu(std::string &menu_name) {
+  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+    if (i->name == menu_name) {
+      machine_menus.erase(i);
+      return true;
+    }
+  }
+  std::string num = menu_name;
+  std::stringstream ss(num);
+  unsigned int n = 0;
+  ss >> n;
+  if(n!=0&&n<=machine_menus.size()){
+    auto menu = machine_menus.begin();
+    std::advance(menu, (n-1) );
+    machine_menus.erase(menu);
+    return true;
+  }
+  return false;
+}
+
+coffee_menu& find_menu(std::string &menu_name) {
+  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
+    if (i->name == menu_name) {
+      return *i;
+    }
+  }
+  std::string num = menu_name;
+  std::stringstream ss(num);
+  unsigned int n = 0;
+  ss >> n;
+  if(n!=0&&n<=machine_menus.size()){
+    auto menu = machine_menus.begin();
+    std::advance(menu, (n-1) );
+    return *(menu);
+  }
+  return *machine_menus.end();
+}
+
 //删除奶制品
 void delete_milk(coffee_additives &new_additives) {
   std::string name;
@@ -223,34 +261,6 @@ void delete_milk(coffee_additives &new_additives) {
     flag = input_bool();
   }
   while (flag);
-}
-
-bool delete_menu(std::string &menu_name) {
-  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
-    if (i->name == menu_name) {
-      machine_menus.erase(i);
-      return true;
-    }
-  }
-  return false;
-}
-
-coffee_menu& find_menu(std::string &menu_name) {
-  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
-    if (i->name == menu_name) {
-      return *i;
-    }
-  }
-  std::string num = menu_name;
-  std::stringstream ss(num);
-  unsigned int n;
-  ss >> n;
-  if(n<=machine_menus.size()){
-    auto menu = machine_menus.begin();
-    std::advance(menu, (n-1) );
-    return *(menu);
-  }
-  return *machine_menus.end();
 }
 
 //删除糖浆
@@ -579,18 +589,15 @@ void add_custom_order() {
     setting_coffee_menu(custom_menu);
     std::cout << "您确定使用这个菜单了吗？" << std::endl;
     flag = input_bool();
-  }
-  while (!flag);
+  }while (!flag);
   if (brew_coffee(custom_menu)) {
     completed_menus.push_back(custom_menu);
     std::cout << "订单完成！请取走咖啡。" << std::endl;
     finish_coffee_order(custom_menu);
-
   }
   else {
     std::cout << "订单制作失败！缺少材料。" << std::endl;
   }
-
 }
 
 void add_preset_order() {
