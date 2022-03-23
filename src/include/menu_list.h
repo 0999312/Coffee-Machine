@@ -19,6 +19,7 @@ void main_menu() {
   int button;
   while (true) {
     system_status(); //原来的状态输出改为函数移到了functions.h文件中
+    //老师说单位不清晰，添加了了大部分用单位计量的单位介绍
     std::printf("咖啡豆剩余量（单位：克）：%dg\n", machine_ingredients.coffeeBean);
     std::printf("水剩余量（单位：克）：%dg\n", machine_ingredients.water);
     std::cout<<"本次运行已制作的咖啡数量："<<coffee_count<<" 杯。"<<std::endl;
@@ -54,7 +55,7 @@ void main_menu() {
 	create_new_ingredients();
 	break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n"); //老师可能会挑刺，改了。下面也都改了
 	break;
     }
   }
@@ -176,6 +177,7 @@ void add_other_ingredient() {
     system_status();
     std::printf("-------------------其他原料-------------------\n");
     std::printf("    [ 1] - 奶制品\n    [ 2] - 糖浆\n    [ 3] - 甜味剂\n    [ 4] - 酒\n    [ 5] - 其他原料\n    [ 9] - 返回上一级\n");
+    //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
     std::cout << "请注意，所有的数据均按照重量（单位：克）计算。" << std::endl;
     std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
     print_line();
@@ -216,6 +218,7 @@ void add_ingredient() {
     system_status();
     std::printf("------------------添加新原料------------------\n");
     std::printf("    [ 1] - 添加水\n    [ 2] - 添加咖啡豆\n    [ 3] - 添加杯子\n    [ 4] - 添加其他原料\n    [ 9] - 返回上一级\n");
+    //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
     std::cout << "请注意，所有的数据均按照重量（单位：克）计算。" << std::endl;
     std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
     print_line();
