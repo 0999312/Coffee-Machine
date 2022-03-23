@@ -13,7 +13,8 @@
 #include <list> //C++ STL实现 双向链表（我们甚至不需要自己写链表了，YES）
 #include <sstream> //C++ 字符串流
 #include <cstdlib> //C语言的stdlib，用C++调用时候建议使用<c***>（***代表原来的头文件名称）
-#include <iterator>
+#include <iterator>// C++迭代器库
+#include <vector> // C++ Vector（可变数组）库
 #include <algorithm> // C++算法库
 #include <ctime>// C语言 时间
 #include "structs.h" // 自己的结构体头文件
@@ -50,6 +51,14 @@ void clear_screen() {
 */
 }
 
+std::vector<std::pair<std::string, int>> sortedMap(std::map<std::string, int> &map){
+  std::vector<std::pair<std::string, int>> arr;
+  for (const auto &item : map)
+      arr.emplace_back(item);
+  std::sort(arr.begin(), arr.end(), [] (const auto &x, const auto &y) {return x.second < y.second;});
+  return arr;
+}
+
 void press_any_button() {
   print_line();
   std::cout << "按任意键继续。" << std::endl;
@@ -67,6 +76,8 @@ void press_any_button_1() {
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
 }
+
+
 
 std::string time_string_now() {
   std::time_t now = std::time(nullptr);
@@ -232,10 +243,9 @@ bool delete_menu(std::string &menu_name) {
 }
 
 coffee_menu& find_menu(std::string &menu_name) {
-  for (auto i = machine_menus.begin(); i != machine_menus.end(); i++) {
-    if (i->name == menu_name) {
+  for (auto i : machine_menus) {
+    if (i.name == menu_name)
       return *i;
-    }
   }
   std::string num = menu_name;
   std::stringstream ss(num);
