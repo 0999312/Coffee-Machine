@@ -20,8 +20,8 @@ void main_menu() {
   while (true) {
     system_status(); //原来的状态输出改为函数移到了functions.h文件中
     //老师说单位不清晰，添加了了大部分用单位计量的单位介绍
-    std::printf("咖啡豆剩余量（单位：克）：%dg\n", machine_ingredients.coffeeBean);
-    std::printf("水剩余量（单位：克）：%dg\n", machine_ingredients.water);
+    std::printf("咖啡豆剩余量：%d g\n", machine_ingredients.coffeeBean);
+    std::printf("水剩余量：%d g\n", machine_ingredients.water);
     std::cout<<"本次运行已制作的咖啡数量："<<coffee_count<<" 杯。"<<std::endl;
     print_line();
     std::printf("    [ 1] - 原料管理\n    [ 2] - 菜单管理\n    [ 3] - 新增订单\n    [ 4] - 统计功能\n    [ 5] - 初始化咖啡机\n    [ 0] - 结束程序\n");
