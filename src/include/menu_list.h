@@ -19,13 +19,14 @@ void main_menu() {
   int button;
   while (true) {
     system_status(); //原来的状态输出改为函数移到了functions.h文件中
-    std::printf("咖啡豆剩余量：%d\n", machine_ingredients.coffeeBean);
-    std::printf("水剩余量：%d\n", machine_ingredients.water);
+    //老师说单位不清晰，添加了了大部分用单位计量的单位介绍
+    std::printf("咖啡豆剩余量：%d g\n", machine_ingredients.coffeeBean);
+    std::printf("水剩余量：%d g\n", machine_ingredients.water);
     std::cout<<"本次运行已制作的咖啡数量："<<coffee_count<<" 杯。"<<std::endl;
     print_line();
-    std::printf("0.原料管理\n1.菜单管理\n2.新增订单\n3.统计功能\n4.初始化咖啡机\n-1.结束程序\n");
+    std::printf("    [ 1] - 原料管理\n    [ 2] - 菜单管理\n    [ 3] - 新增订单\n    [ 4] - 统计功能\n    [ 5] - 初始化咖啡机\n    [ 0] - 结束程序\n");
     std::cin >> button;
-    if (button == -1){
+    if (button == 0){
       std::ofstream menusFile;
       menusFile.open("drinks_menu.json", std::ios::out | std::ios::trunc);
       menusFile << gen_machine_menu_string();
@@ -38,23 +39,23 @@ void main_menu() {
       break;
     }
     switch (button) {
-      case 0:
+      case 1:
 	ingredient_management();
 	break;
-      case 1:
+      case 2:
 	menu_management();
 	break;
-      case 2:
+      case 3:
 	add_order();
 	break;
-      case 3:
+      case 4:
 	stat_menu();
 	break;
-      case 4:
+      case 5:
 	create_new_ingredients();
 	break;
       default:
-	std::printf("输入错误,请重新输入：\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n"); //老师可能会挑刺，改了。下面也都改了
 	break;
     }
   }
@@ -72,19 +73,19 @@ void add_order() {
   while (true) {
     system_status();
     std::printf("-------------------新增订单-------------------\n");
-    std::printf("0.选择菜单\n1.自定义菜单\n9.返回主界面\n");
+    std::printf("    [ 1] - 选择菜单\n    [ 2] - 自定义菜单\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
-      case 0:
+      case 1:
 	add_preset_order();
 	break;
-      case 1:
+      case 2:
 	add_custom_order();
 	break;
       default:
-	std::printf("未完成，请返回上一级\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	break;
     }
     press_any_button_1();
@@ -124,23 +125,23 @@ void stat_menu() {
   while (true) {
     system_status();
     std::printf("------------------------统计功能------------------------\n");
-    std::printf("0.打印预设菜单\n1.打印完成订单\n2.信息统计\n9.返回主界面\n");
+    std::printf("    [ 1] - 打印预设菜单\n    [ 2] - 打印完成订单\n    [ 3] - 信息统计\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
 
-      case 0:
+      case 1:
 	print_preset_menu();
 	break;
-      case 1:
+      case 2:
 	print_completed_menu();
 	break;
-      case 2:
+      case 3:
 	print_stats();
 	break;
       default:
-	std::printf("未完成，请返回上一级\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	press_any_button_1();
     }
   }
@@ -175,31 +176,32 @@ void add_other_ingredient() {
   while (true) {
     system_status();
     std::printf("-------------------其他原料-------------------\n");
-    std::printf("0.奶制品\n1.糖浆\n2.甜味剂\n3.酒\n4.其他原料\n9.返回上一级\n");
-    std::cout << "请注意，所有的数据均按照质量计算。" << std::endl;
-    std::cout << "数值对应为原料的克数，即当前有多少克原料。" << std::endl;
+    std::printf("    [ 1] - 奶制品\n    [ 2] - 糖浆\n    [ 3] - 甜味剂\n    [ 4] - 酒\n    [ 5] - 其他原料\n    [ 9] - 返回上一级\n");
+    //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
+    std::cout << "请注意，所有的数据均按照重量（单位：克）计算。" << std::endl;
+    std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
     print_line();
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
-      case 0:
+      case 1:
 	input_milk(machine_ingredients.additives);
 	break;
-      case 1:
+      case 2:
 	input_syrup(machine_ingredients.additives);
 	break;
-      case 2:
+      case 3:
 	input_sweeter(machine_ingredients.additives);
 	break;
-      case 3:
+      case 4:
 	input_alcohol(machine_ingredients.additives);
 	break;
-      case 4:
+      case 5:
 	input_other_ingredient(machine_ingredients.additives);
 	break;
       default:
-	std::printf("输入错误，请重新输入：\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	break;
     }
     press_any_button_1();
@@ -215,27 +217,31 @@ void add_ingredient() {
   while (true) {
     system_status();
     std::printf("------------------添加新原料------------------\n");
-    std::printf("0.添加水\n1.添加咖啡豆\n2.添加其他原料\n9.返回上一级\n");
-    std::cout << "请注意，所有的数据均按照质量计算。" << std::endl;
-    std::cout << "数值对应为原料的克数，即当前有多少克原料。" << std::endl;
+    std::printf("    [ 1] - 添加水\n    [ 2] - 添加咖啡豆\n    [ 3] - 添加杯子\n    [ 4] - 添加其他原料\n    [ 9] - 返回上一级\n");
+    //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
+    std::cout << "请注意，所有的数据均按照重量（单位：克）计算。" << std::endl;
+    std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
     print_line();
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
-      case 0:
-	std::cout << "请输入咖啡机内当前的水量。" << std::endl;
+      case 1:
+	std::cout << "请输入咖啡机内当前的水的重量（单位：克）。" << std::endl;
 	input_value(machine_ingredients.water);
 	break;
-      case 1:
-	std::cout << "请输入咖啡机内当前的咖啡豆数量。" << std::endl;
+      case 2:
+	std::cout << "请输入咖啡机内当前的咖啡豆的重量（单位：克）。" << std::endl;
 	input_value(machine_ingredients.coffeeBean);
 	break;
-      case 2:
+      case 3:
+  std::printf("功能未完成，请重新输入：\n");
+  break;
+      case 4:
 	add_other_ingredient();
 	break;
       default:
-	std::printf("输入错误，请重新输入：\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	break;
     }
     press_any_button_1();
@@ -247,30 +253,30 @@ void delete_ingredient() {
   int button = 10;
   while (true) {
     system_status();
-    std::printf("---------------选择删除原料类型---------------\n");
-    std::printf("0.奶制品\n1.糖浆\n2.甜味剂\n3.酒\n4.其他原料\n9.返回上一级\n");
+    std::printf("---------------请选择需要删除的原料类型---------------\n");
+    std::printf("    [ 1] - 奶制品\n    [ 2] - 糖浆\n    [ 3] - 甜味剂\n    [ 4] - 酒\n    [ 5] - 其他原料\n    [ 9] - 返回上一级\n");
     print_line();
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
-      case 0:
+      case 1:
 	delete_milk(machine_ingredients.additives);
 	break;
-      case 1:
+      case 2:
 	delete_syrup(machine_ingredients.additives);
 	break;
-      case 2:
+      case 3:
 	delete_sweeter(machine_ingredients.additives);
 	break;
-      case 3:
+      case 4:
 	delete_alcohol(machine_ingredients.additives);
 	break;
-      case 4:
+      case 5:
 	delete_other_ingredient(machine_ingredients.additives);
 	break;
       default:
-	std::printf("输入错误，请重新输入：\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	break;
     }
     press_any_button_1();
@@ -286,22 +292,22 @@ void ingredient_management() {
   while (true) {
     system_status();
     std::printf("-------------------原料管理-------------------\n");
-    std::printf("0.添加原料\n1.删除原料\n2.现有原料列表\n9.返回主界面\n");
+    std::printf("    [ 1] - 添加原料\n    [ 2] - 删除原料\n    [ 3] - 现有原料列表\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
-      case 0:
+      case 1:
 	add_ingredient();
 	break;
-      case 1:
+      case 2:
 	delete_ingredient();
 	break;
-      case 2:
+      case 3:
 	print_machine_ingredients();
 	break;
       default:
-	std::printf("输入错误，请重新输入：\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	break;
     }
     press_any_button_1();
@@ -314,19 +320,19 @@ void menu_management() {
   while (true) {
     system_status();
     std::printf("-------------------菜单管理-------------------\n");
-    std::printf("0.添加新菜单\n1.删除菜单\n9.返回主界面\n");
+    std::printf("    [ 1] - 添加新菜单\n    [ 2] - 删除菜单\n    [ 9] - 返回主界面\n");
     std::cin >> button;
     if (button == 9)
       break;
     switch (button) {
-      case 0:
+      case 1:
 	add_new_coffee_menu();
 	break;
-      case 1:
+      case 2:
 	delete_drink_menu();
 	break;
       default:
-	std::printf("未完成，请返回上一级\n");
+	std::printf("输入错误,请重新输入选项对应的数字：\n");
 	break;
     }
     press_any_button_1();

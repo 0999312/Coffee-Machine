@@ -389,7 +389,34 @@ struct coffee_menu {
 
 }null_menu;
 
+struct coffee_cup {
+    // 咖啡名称
+    std::string name;
+    // 添加剂
+    int amount;
 
+    bool is_too_much(int coffee_amount){
+      //出现负数代表无限容量的杯子。
+      //判断负数是因为可能会出现胡乱修改数据的情况以及方便调试。
+      if(this->amount < 0) return false;
+      return coffee_amount > this->amount;
+    }
+
+    bool operator == (const coffee_cup &other){
+      return this->name == other.name && this->amount == other.amount;
+    }
+
+    bool operator <(const coffee_cup &other){
+      bool result = this->amount < other.amount;
+      return result ? result : (this->amount == other.amount && this->name < other.name);
+    }
+
+    bool operator >(const coffee_cup &other){
+      bool result = this->amount > other.amount;
+      return result ? result : (this->amount == other.amount && this->name > other.name);
+    }
+
+};
 
 struct coffee_machine_stat {
     // 美式滴滤的杯数
