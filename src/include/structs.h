@@ -367,28 +367,6 @@ struct coffee_ingredients {
 
 } machine_ingredients;
 
-// 咖啡菜单表，当然是按一杯咖啡的量进行计算。
-struct coffee_menu {
-    // 咖啡名称
-    std::string name;
-    // 咖啡基底类型，true代表使用意式浓缩，false代表使用美式滴滤。
-    // 咖啡类型的用量算法已经写在文档里了。
-    // 如果你想要咖啡机里装其他类型的咖啡基底，请直接发issue。
-    bool type;
-    // 咖啡用量
-    int amount;
-    // 添加剂
-    coffee_additives additives;
-
-    bool operator ==(const coffee_menu& other){
-      return this->name == other.name
-	  && this->type == other.type
-	  && this->amount == other.amount
-	  && this->additives == other.additives;
-    }
-
-}null_menu;
-
 struct coffee_cup {
     // 咖啡名称
     std::string name;
@@ -418,6 +396,29 @@ struct coffee_cup {
 
 };
 
+
+// 咖啡菜单表，当然是按一杯咖啡的量进行计算。
+struct coffee_menu {
+    // 咖啡名称
+    std::string name;
+    // 咖啡基底类型，true代表使用意式浓缩，false代表使用美式滴滤。
+    // 咖啡类型的用量算法已经写在文档里了。
+    // 如果你想要咖啡机里装其他类型的咖啡基底，请直接发issue。
+    bool type;
+    // 咖啡用量
+    int amount;
+    // 添加剂
+    coffee_additives additives;
+
+    bool operator ==(const coffee_menu& other){
+      return this->name == other.name
+	  && this->type == other.type
+	  && this->amount == other.amount
+	  && this->additives == other.additives;
+    }
+
+}null_menu;
+
 struct coffee_machine_stat {
     // 美式滴滤的杯数
     int drip = 0;
@@ -425,6 +426,7 @@ struct coffee_machine_stat {
     int espresso = 0;
     // 添加剂
     coffee_additives additives;
+
 
 }machine_stat;
 
