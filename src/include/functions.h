@@ -633,18 +633,19 @@ void add_preset_order() {
     num++;
   }
   bool flag;
+  coffee_menu order_menu;
   do {
     std::cout << "请输入您想要购买的菜单名。" << std::endl;
     std::cin >> menu_name;
+    order_menu = find_menu(menu_name);
+    if (order_menu == null_menu) {
+        std::cout << "不存在该菜单，返回上一级。" << std::endl;
+        return ;
+    }
     std::cout << "您确定使用这个菜单了吗？" << std::endl;
     flag = input_bool();
   }
   while (!flag);
-  coffee_menu order_menu = find_menu(menu_name);
-  if (order_menu == null_menu) {
-    std::cout << "订单制作失败！不存在该菜单。" << std::endl;
-    return;
-  }
   order_menu.name = order_menu.name + ':' + time_string_now();
   if (brew_coffee(order_menu)) {
     completed_menus.push_back(order_menu);
