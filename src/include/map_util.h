@@ -25,7 +25,6 @@ std::vector<std::pair<std::string, int>> sortedMap(std::map<std::string, int> &m
   return arr;
 }
 
-//std::cout << "\t\t名称：" << it->first << "，含量：" << it->second << std::endl;
 void print_map(std::map<std::string, int> &map){
   if(map.size()<=0){
       std::cout << "\t\t空空如也。" << std::endl;
