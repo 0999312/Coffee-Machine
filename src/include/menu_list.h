@@ -40,23 +40,23 @@ void main_menu() {
     }
     switch (button) {
       case 1:
-	ingredient_management();
-	break;
+	      ingredient_management();
+	      break;
       case 2:
-	menu_management();
-	break;
+	      menu_management();
+	      break;
       case 3:
-	add_order();
-	break;
+	      add_order();
+      	break;
       case 4:
-	stat_menu();
-	break;
+	      stat_menu();
+	      break;
       case 5:
-	create_new_ingredients();
-	break;
+	      create_new_ingredients();
+	      break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n"); //老师可能会挑刺，改了。下面也都改了
-	break;
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m"); //老师可能会挑刺，改了。下面也都改了
+      	break;
     }
   }
 }
@@ -79,14 +79,14 @@ void add_order() {
       break;
     switch (button) {
       case 1:
-	add_preset_order();
-	break;
+	      add_preset_order();
+	      break;
       case 2:
-	add_custom_order();
-	break;
+	      add_custom_order();
+	      break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	break;
+	      std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+	      break;
     }
     press_any_button_1();
   }
@@ -132,17 +132,17 @@ void stat_menu() {
     switch (button) {
 
       case 1:
-	print_preset_menu();
-	break;
+      	print_preset_menu();
+      	break;
       case 2:
-	print_completed_menu();
-	break;
+      	print_completed_menu();
+      	break;
       case 3:
-	print_stats();
-	break;
+      	print_stats();
+      	break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	press_any_button_1();
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	press_any_button_1();
     }
   }
 }
@@ -162,7 +162,7 @@ void delete_drink_menu() {
     if(delete_menu(menu_name))
       std::cout << "菜单移除成功。" << std::endl;
     else
-      std::cout << "菜单移除失败，不存在该菜单。" << std::endl;
+      std::cout << "\033[31m菜单移除失败，不存在该菜单。\033[0m" << std::endl;
 
     std::cout << "您还需要继续删除其他菜单吗？" << std::endl;
     flag = input_bool();
@@ -186,23 +186,23 @@ void add_other_ingredient() {
       break;
     switch (button) {
       case 1:
-	input_milk(machine_ingredients.additives);
-	break;
+      	input_milk(machine_ingredients.additives);
+      	break;
       case 2:
-	input_syrup(machine_ingredients.additives);
-	break;
+      	input_syrup(machine_ingredients.additives);
+	      break;
       case 3:
-	input_sweeter(machine_ingredients.additives);
-	break;
+      	input_sweeter(machine_ingredients.additives);
+      	break;
       case 4:
-	input_alcohol(machine_ingredients.additives);
-	break;
+      	input_alcohol(machine_ingredients.additives);
+      	break;
       case 5:
-	input_other_ingredient(machine_ingredients.additives);
-	break;
+      	input_other_ingredient(machine_ingredients.additives);
+      	break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	break;
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	break;
     }
     press_any_button_1();
   }
@@ -227,22 +227,22 @@ void add_ingredient() {
       break;
     switch (button) {
       case 1:
-	std::cout << "请输入咖啡机内当前的水的重量（单位：克）。" << std::endl;
-	input_value(machine_ingredients.water);
-	break;
+      	std::cout << "请输入咖啡机内当前的水的重量（单位：克）。" << std::endl;
+      	input_value(machine_ingredients.water);
+      	break;
       case 2:
-	std::cout << "请输入咖啡机内当前的咖啡豆的重量（单位：克）。" << std::endl;
-	input_value(machine_ingredients.coffeeBean);
-	break;
+      	std::cout << "请输入咖啡机内当前的咖啡豆的重量（单位：克）。" << std::endl;
+      	input_value(machine_ingredients.coffeeBean);
+      	break;
       case 3:
-  std::printf("功能未完成，请重新输入：\n");
-  break;
+        std::printf("\033[31m功能未完成，请重新输入：\n\033[0m");
+        break;
       case 4:
-	add_other_ingredient();
-	break;
+      	add_other_ingredient();
+      	break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	break;
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+	      break;
     }
     press_any_button_1();
   }
@@ -261,23 +261,23 @@ void delete_ingredient() {
       break;
     switch (button) {
       case 1:
-	delete_milk(machine_ingredients.additives);
-	break;
+	      delete_milk(machine_ingredients.additives);
+	      break;
       case 2:
-	delete_syrup(machine_ingredients.additives);
-	break;
+      	delete_syrup(machine_ingredients.additives);
+      	break;
       case 3:
-	delete_sweeter(machine_ingredients.additives);
-	break;
+      	delete_sweeter(machine_ingredients.additives);
+      	break;
       case 4:
-	delete_alcohol(machine_ingredients.additives);
-	break;
+      	delete_alcohol(machine_ingredients.additives);
+      	break;
       case 5:
-	delete_other_ingredient(machine_ingredients.additives);
-	break;
+      	delete_other_ingredient(machine_ingredients.additives);
+      	break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	break;
+        std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	break;
     }
     press_any_button_1();
   }
@@ -298,17 +298,17 @@ void ingredient_management() {
       break;
     switch (button) {
       case 1:
-	add_ingredient();
-	break;
+	      add_ingredient();
+	      break;
       case 2:
-	delete_ingredient();
-	break;
+	      delete_ingredient();
+      	break;
       case 3:
-	print_machine_ingredients();
-	break;
+      	print_machine_ingredients();
+	      break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	break;
+	      std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	break;
     }
     press_any_button_1();
   }
@@ -326,14 +326,14 @@ void menu_management() {
       break;
     switch (button) {
       case 1:
-	add_new_coffee_menu();
-	break;
+      	add_new_coffee_menu();
+      	break;
       case 2:
-	delete_drink_menu();
-	break;
+      	delete_drink_menu();
+      	break;
       default:
-	std::printf("输入错误,请重新输入选项对应的数字：\n");
-	break;
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	break;
     }
     press_any_button_1();
   }
