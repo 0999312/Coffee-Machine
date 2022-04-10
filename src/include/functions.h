@@ -52,22 +52,27 @@ void clear_screen() {
    */
 }
 
+//因为没有了清屏函数，这一步就显得没有必要，注释以提升操作流畅度
 void press_any_button() {
+  /*
   print_line();
-  std::cout << "按任意键继续。" << std::endl;
+  std::cout << "按确定键(Enter)继续。" << std::endl;
   std::cin.clear();
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
+  */
 }
 
 //前面那个按任意键函数在菜单界面会跳过按键继续，这个加了一个获取字符
 void press_any_button_1() {
+  /*
   print_line();
-  std::cout << "按任意键继续。" << std::endl;
+  std::cout << "按确定键(Enter)继续。" << std::endl;
   std::cin.clear();
   std::cin.get();
   while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
     continue;
+  */
 }
 
 std::string time_string_now() {
@@ -95,7 +100,7 @@ void system_status() {
 //输入用函数
 void input_value(int &value) {
   while (!(std::cin >> value)) {
-    std::cout << "输入错误，请重新输入。" << std::endl;
+    std::cout << "\033[31m输入错误,请重新输入：\033[0m" << std::endl;
     std::cin.clear();
     while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
       continue;
@@ -106,7 +111,7 @@ void input_value(int &value) {
 int input_int_value() {
   int value;
   while (!(std::cin >> value)) {
-    std::cout << "输入错误，请重新输入。" << std::endl;
+    std::cout << "\033[31m输入错误,请重新输入：\033[0m" << std::endl;
     std::cin.clear();
     while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
       continue;
@@ -120,7 +125,7 @@ bool input_bool() {
   std::cout << "是(Y) / 否(N)" << std::endl;
   while (!(std::cin >> value)
       || (value != 'Y' && value != 'N' && value != 'y' && value != 'n')) {
-    std::cout << "输入错误，请重新输入一个有效的字符。" << std::endl;
+    std::cout << "\033[31m输入错误,请重新输入一个有效的字符。\033[0m" << std::endl;
     std::cout << "是(Y) / 否(N)" << std::endl;
     std::cin.clear();
     while (std::cin.get() != '\n')		//这里清空之前cin缓冲区的数据
@@ -271,7 +276,7 @@ void delete_milk(coffee_additives &new_additives) {
     std::cout << "请输入您想要删除的奶制品名称（请注意大小写）。" << std::endl;
     std::cin >> name;
     if (!new_additives.delete_milk(name))
-      std::cout << "移除失败，不存在该奶制品。" << std::endl;
+      std::cout << "\033[31m移除失败，不存在该奶制品。\033[0m" << std::endl;
     std::cout << "您还需要继续删除其他奶制品吗？" << std::endl;
     flag = input_bool();
   }
@@ -288,7 +293,7 @@ void delete_syrup(coffee_additives &new_additives) {
     std::cout << "请输入您想要删除的糖浆名称（请注意大小写）。" << std::endl;
     std::cin >> name;
     if (!new_additives.delete_syrup(name))
-      std::cout << "移除失败，不存在该糖浆。" << std::endl;
+      std::cout << "\033[31m移除失败，不存在该糖浆。\033[0m" << std::endl;
     std::cout << "您还需要继续删除其他糖浆吗？" << std::endl;
     flag = input_bool();
   }
@@ -305,7 +310,7 @@ void delete_sweeter(coffee_additives &new_additives) {
     std::cout << "请输入您想要删除的甜味剂名称（请注意大小写）。" << std::endl;
     std::cin >> name;
     if (!new_additives.delete_sweeter(name))
-      std::cout << "移除失败，不存在该甜味剂。" << std::endl;
+      std::cout << "\033[31m移除失败，不存在该甜味剂。\033[0m" << std::endl;
     std::cout << "您还需要继续删除其他甜味剂吗？" << std::endl;
     flag = input_bool();
   }
@@ -322,7 +327,7 @@ void delete_alcohol(coffee_additives &new_additives) {
     std::cout << "请输入您想要删除的酒类名称（请注意大小写）。" << std::endl;
     std::cin >> name;
     if (!new_additives.delete_alcohol(name))
-      std::cout << "移除失败，不存在该酒类。" << std::endl;
+      std::cout << "\033[31m移除失败，不存在该酒类。\033[0m" << std::endl;
     std::cout << "您还需要继续删除其他酒类吗？" << std::endl;
     flag = input_bool();
   }
@@ -339,7 +344,7 @@ void delete_other_ingredient(coffee_additives &new_additives) {
     std::cout << "请输入您想要删除的添加剂名称（请注意大小写）。" << std::endl;
     std::cin >> name;
     if (!new_additives.delete_other_ingredient(name))
-      std::cout << "移除失败，不存在该添加剂。" << std::endl;
+      std::cout << "\033[31m移除失败，不存在该添加剂。\033[0m" << std::endl;
     std::cout << "您还需要继续删除其他添加剂吗？" << std::endl;
     flag = input_bool();
   }
@@ -376,7 +381,7 @@ void setting_additives(coffee_additives &new_additives) {
       input_other_ingredient(new_additives);
       break;
       default:
-      std::printf("输入错误,请重新输入一个有效的的数字：\n");
+      std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
       break;
     }
     press_any_button_1();
@@ -483,10 +488,10 @@ bool brew_coffee(coffee_menu &menu) {
 	&& machine_ingredients.use_coffee_bean(menu.amount);
   }
   if (!flag_base)
-    std::cout << "制作咖啡基底时出现材料短缺错误！" << std::endl;
+    std::cout << "\033[33m制作咖啡基底时出现材料短缺错误！\033[0m" << std::endl;
   flag_additives = machine_ingredients.additives.use_additives(menu.additives);
   if (!flag_base)
-    std::cout << "添加添加剂时出现材料短缺错误！" << std::endl;
+    std::cout << "\033[33m添加添加剂时出现材料短缺错误！\033[0m" << std::endl;
   return flag_base && flag_additives;
 }
 
@@ -621,7 +626,7 @@ void add_custom_order() {
     finish_coffee_order(custom_menu);
   }
   else {
-    std::cout << "很抱歉，订单制作失败! \n请等材料补充完毕后再进行购买。" << std::endl;
+    std::cout << "\033[33m很抱歉，订单制作失败! \n请等材料补充完毕后再进行购买。\033[0m" << std::endl;
   }
 }
 
@@ -639,7 +644,7 @@ void add_preset_order() {
     std::cin >> menu_name;
     order_menu = find_menu(menu_name);
     if (order_menu == null_menu) {
-        std::cout << "不存在该菜单，返回上一级。" << std::endl;
+        std::cout << "\033[31m不存在该菜单，返回上一级。\033[0m" << std::endl;
         return ;
     }
     std::cout << "您确定使用这个菜单了吗？" << std::endl;
@@ -653,7 +658,7 @@ void add_preset_order() {
     finish_coffee_order(order_menu);
   }
   else {
-    std::cout << "很抱歉，订单制作失败! \n请等材料补充完毕后再进行购买。" << std::endl;
+    std::cout << "\033[33m很抱歉，订单制作失败! \n请等材料补充完毕后再进行购买。\033[0m" << std::endl;
   }
 }
 
