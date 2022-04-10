@@ -55,7 +55,7 @@ void main_menu() {
 	      create_new_ingredients();
 	      break;
       default:
-      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m"); //老师可能会挑刺，改了。下面也都改了
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m"); //老师可能会挑刺，改了。下面也都改了
       	break;
     }
   }
@@ -85,7 +85,7 @@ void add_order() {
 	      add_custom_order();
 	      break;
       default:
-	      std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+	      std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
 	      break;
     }
     press_any_button_1();
@@ -141,7 +141,7 @@ void stat_menu() {
       	print_stats();
       	break;
       default:
-      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
       	press_any_button_1();
     }
   }
@@ -157,13 +157,12 @@ void delete_drink_menu() {
       std::cout << num << '.' << i->name << std::endl;
       num++;
     }
-    std::cout << "请输入您想要移除的菜单。" << std::endl;
+    std::cout << "请输入您想要移除的菜单名称。" << std::endl;
     std::cin >> menu_name;
     if(delete_menu(menu_name))
       std::cout << "菜单移除成功。" << std::endl;
     else
-      std::cout << "\033[31m菜单移除失败，不存在该菜单。\033[0m" << std::endl;
-
+      std::cout << "\033[31m菜单移除失败，不存在此菜单。\033[0m" << std::endl;
     std::cout << "您还需要继续删除其他菜单吗？" << std::endl;
     flag = input_bool();
   }
@@ -178,7 +177,7 @@ void add_other_ingredient() {
     std::printf("-------------------其他原料-------------------\n");
     std::printf("    [ 1] - 奶制品\n    [ 2] - 糖浆\n    [ 3] - 甜味剂\n    [ 4] - 酒\n    [ 5] - 其他原料\n    [ 9] - 返回上一级\n");
     //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
-    std::cout << "请注意，所有的数据均按照重量（单位：克）计算。" << std::endl;
+    std::cout << "温馨提示：所有的数据均按照重量（单位：克）来进行计算。" << std::endl;
     std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
     print_line();
     std::cin >> button;
@@ -201,7 +200,7 @@ void add_other_ingredient() {
       	input_other_ingredient(machine_ingredients.additives);
       	break;
       default:
-      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
       	break;
     }
     press_any_button_1();
@@ -219,7 +218,7 @@ void add_ingredient() {
     std::printf("------------------添加新原料------------------\n");
     std::printf("    [ 1] - 添加水\n    [ 2] - 添加咖啡豆\n    [ 3] - 添加杯子\n    [ 4] - 添加其他原料\n    [ 9] - 返回上一级\n");
     //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
-    std::cout << "请注意，所有的数据均按照重量（单位：克）计算。" << std::endl;
+    std::cout << "温馨提示：所有的数据均按照重量（单位：克）来进行计算。" << std::endl;
     std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
     print_line();
     std::cin >> button;
@@ -241,7 +240,7 @@ void add_ingredient() {
       	add_other_ingredient();
       	break;
       default:
-      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
 	      break;
     }
     press_any_button_1();
@@ -276,7 +275,7 @@ void delete_ingredient() {
       	delete_other_ingredient(machine_ingredients.additives);
       	break;
       default:
-        std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+        std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
       	break;
     }
     press_any_button_1();
@@ -307,7 +306,7 @@ void ingredient_management() {
       	print_machine_ingredients();
 	      break;
       default:
-	      std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+	      std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
       	break;
     }
     press_any_button_1();
@@ -332,7 +331,7 @@ void menu_management() {
       	delete_drink_menu();
       	break;
       default:
-      	std::printf("\033[31m输入错误,请重新输入选项对应的数字：\n\033[0m");
+      	std::printf("\033[31m输入错误,请重新输入选项对应的数字。\n\033[0m");
       	break;
     }
     press_any_button_1();
