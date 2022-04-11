@@ -189,7 +189,7 @@ void add_other_ingredient() {
       	break;
       case 2:
       	input_syrup(machine_ingredients.additives);
-	      break;
+	break;
       case 3:
       	input_sweeter(machine_ingredients.additives);
       	break;
@@ -216,7 +216,7 @@ void add_ingredient() {
   while (true) {
     system_status();
     std::printf("------------------添加新原料------------------\n");
-    std::printf("    [ 1] - 添加水\n    [ 2] - 添加咖啡豆\n    [ 3] - 添加杯子\n    [ 4] - 添加其他原料\n    [ 9] - 返回上一级\n");
+    std::printf("    [ 1] - 添加水\n    [ 2] - 添加咖啡豆\n    [ 3] - 添加其他原料\n    [ 9] - 返回上一级\n");
     //添加了单位的说明，避免单位不清楚，将原本的“质量”改成了“重量”，避免歧义，原来的质量有品质的歧义
     std::cout << "温馨提示：所有的数据均按照重量（单位：克）来进行计算。" << std::endl;
     std::cout << "数值对应为原料的重量，即当前有多少克原料。" << std::endl;
@@ -234,9 +234,6 @@ void add_ingredient() {
       	input_value(machine_ingredients.coffeeBean);
       	break;
       case 3:
-        std::printf("\033[31m功能未完成，请重新输入：\n\033[0m");
-        break;
-      case 4:
       	add_other_ingredient();
       	break;
       default:

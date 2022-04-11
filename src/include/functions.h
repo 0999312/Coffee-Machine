@@ -138,7 +138,7 @@ bool input_bool() {
 void input_milk(coffee_additives &new_additives) {
   std::string name;
   int amount;
-  bool flag = false;
+  bool flag = true;
   do {
     print_map_keys(new_additives.milk);
     print_line();
@@ -146,6 +146,8 @@ void input_milk(coffee_additives &new_additives) {
     std::cin >> name;
     std::cout << "请输入您想要添加的数量（注意：数量单位为克）。" << std::endl;
     input_value(amount);
+    std::cout << "您确定添加这个奶制品吗？" << std::endl;
+    if(!input_bool()) continue;
     new_additives.add_milk(name, amount);
     std::cout << "您还需要继续添加其他奶制品吗？" << std::endl;
     flag = input_bool();
@@ -157,7 +159,7 @@ void input_milk(coffee_additives &new_additives) {
 void input_syrup(coffee_additives &new_additives) {
   std::string name;
   int amount;
-  bool flag = false;
+  bool flag = true;
   do {
     print_map_keys(new_additives.syrup);
     print_line();
@@ -165,6 +167,8 @@ void input_syrup(coffee_additives &new_additives) {
     std::cin >> name;
     std::cout << "请输入您想要添加的数量（注意：数量单位为克）。" << std::endl;
     input_value(amount);
+    std::cout << "您确定添加这个糖浆吗？" << std::endl;
+    if(!input_bool()) continue;
     new_additives.add_syrup(name, amount);
     std::cout << "您还需要继续添加其他糖浆吗？" << std::endl;
     flag = input_bool();
@@ -176,7 +180,7 @@ void input_syrup(coffee_additives &new_additives) {
 void input_sweeter(coffee_additives &new_additives) {
   std::string name;
   int amount;
-  bool flag = false;
+  bool flag = true;
   do {
     print_map_keys(new_additives.sweeter);
     print_line();
@@ -184,6 +188,8 @@ void input_sweeter(coffee_additives &new_additives) {
     std::cin >> name;
     std::cout << "请输入您想要添加的数量（注意：数量单位为克）。" << std::endl;
     input_value(amount);
+    std::cout << "您确定添加这个甜味剂吗？" << std::endl;
+    if(!input_bool()) continue;
     new_additives.add_sweeter(name, amount);
     std::cout << "您还需要继续添加其他甜味剂吗？" << std::endl;
     flag = input_bool();
@@ -195,7 +201,7 @@ void input_sweeter(coffee_additives &new_additives) {
 void input_alcohol(coffee_additives &new_additives) {
   std::string name;
   int amount;
-  bool flag = false;
+  bool flag = true;
   do {
     print_map_keys(new_additives.alcohol);
     print_line();
@@ -203,6 +209,8 @@ void input_alcohol(coffee_additives &new_additives) {
     std::cin >> name;
     std::cout << "请输入您想要添加的数量（注意：数量单位为克）。" << std::endl;
     input_value(amount);
+    std::cout << "您确定添加这个酒类吗？" << std::endl;
+    if(!input_bool()) continue;
     new_additives.add_alcohol(name, amount);
     std::cout << "您还需要继续添加其他酒类吗？" << std::endl;
     flag = input_bool();
@@ -214,7 +222,7 @@ void input_alcohol(coffee_additives &new_additives) {
 void input_other_ingredient(coffee_additives &new_additives) {
   std::string name;
   int amount;
-  bool flag = false;
+  bool flag = true;
   do {
     print_map_keys(new_additives.others);
     print_line();
@@ -222,6 +230,8 @@ void input_other_ingredient(coffee_additives &new_additives) {
     std::cin >> name;
     std::cout << "请输入您想要添加的数量（注意：数量单位为克）。" << std::endl;
     input_value(amount);
+    std::cout << "您确定添加这个添加剂吗？" << std::endl;
+    if(!input_bool()) continue;
     new_additives.add_other_ingredient(name, amount);
     std::cout << "您还需要继续添加其他添加剂吗？" << std::endl;
     flag = input_bool();
