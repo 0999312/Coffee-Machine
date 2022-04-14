@@ -500,7 +500,7 @@ bool brew_coffee(coffee_menu &menu) {
   if (!flag_base)
     std::cout << "\033[33m制作咖啡基底时出现材料短缺错误！\033[0m" << std::endl;
   flag_additives = machine_ingredients.additives.use_additives(menu.additives);
-  if (!flag_base)
+  if (!flag_additives)
     std::cout << "\033[33m添加添加剂时出现材料短缺错误！\033[0m" << std::endl;
   return flag_base && flag_additives;
 }
